@@ -9,6 +9,8 @@ export default function RegistrationScreen({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
+    const [bookTitle, setBookTitle] = useState('')
+    const [bookAuthor, setBookAuthor] = useState('')
 
     const onFooterLinkPress = () => {
         navigation.navigate('Login')
@@ -24,17 +26,30 @@ export default function RegistrationScreen({navigation}) {
             .createUserWithEmailAndPassword(email, password)
             .then((response) => {
                 const uid = response.user.uid
-                const data = {
+                const userData = {
                     id: uid,
                     email,
                     fullName,
                 };
+
+                const booksData = {
+                    bookTitle,
+                    bookAuthor,
+                }
                 const usersRef = firebase.firestore().collection('users')
                 usersRef
                     .doc(uid)
-                    .set(data)
+                    .set(userData)
+
                     .then(() => {
-                        navigation.navigate('Home', {user: data})
+                        const booksRef = firebase.firestore().collection('users')
+                        booksRef
+                            .doc('books')
+                            .set(booksData)
+                    })
+                    
+                    .then(() => {
+                        navigation.navigate('Home', {user: userData})
                     })
                     .catch((error) => {
                         alert(error)
@@ -92,6 +107,28 @@ export default function RegistrationScreen({navigation}) {
                     underlineColorAndroid="transparent"
                     autoCapitalize="none"
                 />
+            <Text style={styles.footerText}>Please Insert Your Books</Text>
+
+                <TextInput
+                    style={styles.input}
+                    placeholderTextColor="#aaaaaa"
+                    placeholder='Input book Title'
+                    onChangeText={(text) => setBookTitle(text)}
+                    value={bookTitle}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
+                 <TextInput
+                    style={styles.input}
+                    placeholderTextColor="#aaaaaa"
+                    placeholder='Input book Author'
+                    onChangeText={(text) => setBookAuthor(text)}
+                    value={bookAuthor}
+                    underlineColorAndroid="transparent"
+                    autoCapitalize="none"
+                />
+
+
                 <TouchableOpacity
                     style={styles.button}
                     onPress={() => onRegisterPress()}>
