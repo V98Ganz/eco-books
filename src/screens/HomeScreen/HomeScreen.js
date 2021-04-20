@@ -76,9 +76,12 @@ export default function HomeScreen(props) {
           backgroundColor: "#424242",
           flexDirection: "row",
           alignItems: "center",
-          justifyContent: "flex-end",
+          justifyContent: "space-between",
         }}
       >
+        <View style={styles.token_number}>
+          <Text style={styles.token_text}>36</Text>
+        </View>
         <Image
           style={styles.profile_image}
           source={{

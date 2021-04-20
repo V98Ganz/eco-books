@@ -1,4 +1,5 @@
 import { StyleSheet } from "react-native";
+import { withSafeAreaInsets } from "react-native-safe-area-context";
 
 export default StyleSheet.create({
   container: {
@@ -11,6 +12,22 @@ export default StyleSheet.create({
     width: 75,
     height: 75,
     borderRadius: 50,
+    marginRight: 10,
+  },
+
+  token_number: {
+    width: 75,
+    height: 75,
+    backgroundColor: "#D7DFDF",
+    alignItems: "center",
+    justifyContent: "center",
+    marginLeft: 10,
+    borderRadius: 50,
+  },
+
+  token_text: {
+    color: "#3F3F3F",
+    fontSize: 45,
   },
   // formContainer: {
   //     flexDirection: 'row',
