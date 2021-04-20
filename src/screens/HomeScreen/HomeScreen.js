@@ -71,7 +71,19 @@ export default function HomeScreen(props) {
     <View style={{ flex: 1 }}>
       <View style={{ flex: 1, backgroundColor: "#424242" }} />
       <View style={{ flex: 4, backgroundColor: "#F1F1F1" }} />
-      <View style={{ flex: 1, backgroundColor: "#424242" }} />
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#424242",
+          flexDirection: "row",
+          justifyContent: "space-around",
+          alignItems: "center",
+        }}
+      >
+        <TouchableOpacity style={styles.button}></TouchableOpacity>
+        <TouchableOpacity style={styles.button}></TouchableOpacity>
+        <TouchableOpacity style={styles.button}></TouchableOpacity>
+      </View>
     </View>
   );
 }
