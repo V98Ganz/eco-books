@@ -7,6 +7,11 @@ export default StyleSheet.create({
     backgroundColor: "#424242",
   },
 
+  profile_image: {
+    width: 75,
+    height: 75,
+    borderRadius: 50,
+  },
   // formContainer: {
   //     flexDirection: 'row',
   //     height: 80,

@@ -4,6 +4,7 @@ import {
   Keyboard,
   Text,
   TextInput,
+  Image,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -69,8 +70,24 @@ export default function HomeScreen(props) {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ flex: 1, backgroundColor: "#424242" }} />
-      <View style={{ flex: 4, backgroundColor: "#F1F1F1" }} />
+      <View
+        style={{
+          flex: 1,
+          backgroundColor: "#424242",
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "flex-end",
+        }}
+      >
+        <Image
+          style={styles.profile_image}
+          source={{
+            uri:
+              "https://i.pinimg.com/236x/a3/ac/1e/a3ac1ed5abaedffd9947face7901e14c.jpg",
+          }}
+        />
+      </View>
+      <View style={{ flex: 4, backgroundColor: "#F1F1F1" }}></View>
       <View
         style={{
           flex: 1,
