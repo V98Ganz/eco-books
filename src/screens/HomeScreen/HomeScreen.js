@@ -7,9 +7,28 @@ import {
   Image,
   TouchableOpacity,
   View,
+  SafeAreaView,
 } from "react-native";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
+
+const HARDCODEDIMGS = [
+  {
+    id: 1,
+    link:
+      "https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg",
+  },
+  {
+    id: 2,
+    link:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf9kvIzoVAbJmLgv5k6kHQj6czGK0V0Qew1w&usqp=CAU",
+  },
+  {
+    id: 3,
+    link:
+      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiHqFLMP_n6u8RhHsT-ERKE4xXGiKs6VdqCw&usqp=CAU",
+  },
+];
 
 export default function HomeScreen(props) {
   const [entityText, setEntityText] = useState("");
@@ -18,55 +37,55 @@ export default function HomeScreen(props) {
   const entityRef = firebase.firestore().collection("entities");
   const userID = props.extraData.id;
 
-  useEffect(() => {
-    entityRef
-      .where("authorID", "==", userID)
-      .orderBy("createdAt", "desc")
-      .onSnapshot(
-        (querySnapshot) => {
-          const newEntities = [];
-          querySnapshot.forEach((doc) => {
-            const entity = doc.data();
-            entity.id = doc.id;
-            newEntities.push(entity);
-          });
-          setEntities(newEntities);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-  }, []);
+  //   useEffect(() => {
+  //     entityRef
+  //       .where("authorID", "==", userID)
+  //       .orderBy("createdAt", "desc")
+  //       .onSnapshot(
+  //         (querySnapshot) => {
+  //           const newEntities = [];
+  //           querySnapshot.forEach((doc) => {
+  //             const entity = doc.data();
+  //             entity.id = doc.id;
+  //             newEntities.push(entity);
+  //           });
+  //           setEntities(newEntities);
+  //         },
+  //         (error) => {
+  //           console.log(error);
+  //         }
+  //       );
+  //   }, []);
 
-  const onAddButtonPress = () => {
-    if (entityText && entityText.length > 0) {
-      const timestamp = firebase.firestore.FieldValue.serverTimestamp();
-      const data = {
-        text: entityText,
-        authorID: userID,
-        createdAt: timestamp,
-      };
-      entityRef
-        .add(data)
-        .then((_doc) => {
-          setEntityText("");
-          Keyboard.dismiss();
-        })
-        .catch((error) => {
-          alert(error);
-        });
-    }
-  };
+  //   const onAddButtonPress = () => {
+  //     if (entityText && entityText.length > 0) {
+  //       const timestamp = firebase.firestore.FieldValue.serverTimestamp();
+  //       const data = {
+  //         text: entityText,
+  //         authorID: userID,
+  //         createdAt: timestamp,
+  //       };
+  //       entityRef
+  //         .add(data)
+  //         .then((_doc) => {
+  //           setEntityText("");
+  //           Keyboard.dismiss();
+  //         })
+  //         .catch((error) => {
+  //           alert(error);
+  //         });
+  //     }
+  //   };
 
-  const renderEntity = ({ item, index }) => {
-    return (
-      <View style={styles.entityContainer}>
-        <Text style={styles.entityText}>
-          {index}. {item.text}
-        </Text>
-      </View>
-    );
-  };
+  //   const renderEntity = ({ item, index }) => {
+  //     return (
+  //       <View style={styles.entityContainer}>
+  //         <Text style={styles.entityText}>
+  //           {index}. {item.text}
+  //         </Text>
+  //       </View>
+  //     );
+  //   };
 
   return (
     <View style={{ flex: 1 }}>
