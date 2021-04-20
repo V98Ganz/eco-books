@@ -8,31 +8,37 @@ import {
   TouchableOpacity,
   View,
   SafeAreaView,
+  ScrollView,
 } from "react-native";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
 
-const HARDCODEDIMGS = [
-  {
-    id: 1,
-    link:
-      "https://cdn.elearningindustry.com/wp-content/uploads/2016/05/top-10-books-every-college-student-read-1024x640.jpeg",
-  },
-  {
-    id: 2,
-    link:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTf9kvIzoVAbJmLgv5k6kHQj6czGK0V0Qew1w&usqp=CAU",
-  },
-  {
-    id: 3,
-    link:
-      "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiHqFLMP_n6u8RhHsT-ERKE4xXGiKs6VdqCw&usqp=CAU",
-  },
-];
-
 export default function HomeScreen(props) {
   const [entityText, setEntityText] = useState("");
   const [entities, setEntities] = useState([]);
+
+  const [imgList, setImageList] = useState([
+    {
+      key:
+        "https://www.penguin.co.uk/content/dam/prh/articles/adults/2019/november/Inline%20image_Trending%20Books_150.jpg",
+      id: 1,
+    },
+    {
+      key:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRIWkOR5ZdRwCfARI6KG411vQGWTa89PhlCcA&usqp=CAU",
+      id: 2,
+    },
+    {
+      key:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ2lauaWOPLZeBVdNbwc2Plc3woJdT4CuXLw&usqp=CAU",
+      id: 3,
+    },
+    {
+      key:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-D4_Z1aoWpcyWrPcv2n8irQKY9fBoNxZKA&usqp=CAU",
+      id: 4,
+    },
+  ]);
 
   const entityRef = firebase.firestore().collection("entities");
   const userID = props.extraData.id;
@@ -109,7 +115,32 @@ export default function HomeScreen(props) {
           }}
         />
       </View>
-      <View style={{ flex: 4, backgroundColor: "#F1F1F1" }}></View>
+      <View style={{ flex: 4, backgroundColor: "#F1F1F1" }}>
+        <FlatList
+          style={{ flex: 1 }}
+          data={[
+            {
+              key:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-D4_Z1aoWpcyWrPcv2n8irQKY9fBoNxZKA&usqp=CAU",
+            },
+            {
+              key:
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwQWJaEAGBMocmYs50IcYrT0AEjaWqmOgflQ&usqp=CAU",
+            },
+            // {
+            //   key:
+            //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-D4_Z1aoWpcyWrPcv2n8irQKY9fBoNxZKA&usqp=CAU",
+            // },
+            // {
+            //   key:
+            //     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-D4_Z1aoWpcyWrPcv2n8irQKY9fBoNxZKA&usqp=CAU",
+            // },
+          ]}
+          renderItem={({ key }) => (
+            <Image style={styles.list_image} source={{ uri: key }} />
+          )}
+        />
+      </View>
       <View
         style={{
           flex: 1,

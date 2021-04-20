@@ -15,6 +15,11 @@ export default StyleSheet.create({
     marginRight: 10,
   },
 
+  list_image: {
+    width: 100,
+    height: 100,
+  },
+
   token_number: {
     width: 75,
     height: 75,
