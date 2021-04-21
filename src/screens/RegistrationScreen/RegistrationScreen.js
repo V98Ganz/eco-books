@@ -49,8 +49,8 @@ export default function RegistrationScreen({ navigation }) {
         const usersRef = firebase.firestore().collection("users");
         return Promise.all([
           userData,
-          usersRef.doc(uid).set(userData),
-          usersRef.doc(uid).collection("books").doc(bookTitle).set(booksData),
+          usersRef.doc(userData.id).set(userData),
+          usersRef.doc(userData.id).collection("books").doc(bookTitle).set(booksData),
         ]);
       })
       .then(([userData]) => {
