@@ -14,6 +14,7 @@ export default function RegistrationScreen({ navigation }) {
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookDescription, setBookDescription] = useState("");
   const [bookImage, setBookImage] = useState("");
+  const [isValid, setIsValid] = useState(true);
 
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
@@ -35,37 +36,25 @@ export default function RegistrationScreen({ navigation }) {
           fullName,
         };
 
-        fetchBooks(bookTitle, bookAuthor).then(
-          ({ title, authors, description, imageLinks }) => {
-            const booksData = {
-              bookTitle: title,
-              bookAuthor: authors[0],
-              bookDescription: description,
-              bookImage: imageLinks.thumbnail,
-            };
-            //console.log(booksData)
+        return Promise.all([fetchBooks(bookTitle, bookAuthor), userData]);
+      })
+      .then(([{ title, authors, description, imageLinks }, userData]) => {
+        const booksData = {
+          bookTitle: title || "no title found",
+          bookAuthor: authors[0] || "no author found",
+          bookDescription: description || "no description found",
+          bookImage: imageLinks.thumbnail || "no images found",
+        };
 
-            const usersRef = firebase.firestore().collection("users");
-            usersRef
-              .doc(uid)
-              .set(userData)
-
-              .then(() => {
-                usersRef
-                  .doc(uid)
-                  .collection("books")
-                  .doc(bookTitle)
-                  .set(booksData);
-              })
-
-              .then(() => {
-                navigation.navigate("Home", { userData });
-              })
-              .catch((error) => {
-                alert(error);
-              });
-          }
-        );
+        const usersRef = firebase.firestore().collection("users");
+        return Promise.all([
+          userData,
+          usersRef.doc(uid).set(userData),
+          usersRef.doc(uid).collection("books").doc(bookTitle).set(booksData),
+        ]);
+      })
+      .then(([userData]) => {
+        navigation.navigate("Home", { userData });
       })
       .catch((error) => {
         alert(error);
