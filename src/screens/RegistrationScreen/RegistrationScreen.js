@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "./styles";
 import { firebase } from "../../firebase/config";
+import { fetchBooks } from "../../utils/utils";
+import styles from "./styles";
 
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -11,6 +12,8 @@ export default function RegistrationScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
+  const [bookDescription, setBookDescription] = useState("");
+  const [bookImage, setBookImage] = useState("");
 
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
@@ -32,25 +35,37 @@ export default function RegistrationScreen({ navigation }) {
           fullName,
         };
 
-        const booksData = {
-          bookTitle,
-          bookAuthor,
-        };
-        const usersRef = firebase.firestore().collection("users");
-        usersRef
-          .doc(uid)
-          .set(userData)
+        fetchBooks(bookTitle, bookAuthor).then(
+          ({ title, authors, description, imageLinks }) => {
+            const booksData = {
+              bookTitle: title,
+              bookAuthor: authors[0],
+              bookDescription: description,
+              bookImage: imageLinks.thumbnail,
+            };
+            //console.log(booksData)
 
-          .then(() => {
-            usersRef.doc(uid).collection("books").doc(bookTitle).set(booksData);
-          })
+            const usersRef = firebase.firestore().collection("users");
+            usersRef
+              .doc(uid)
+              .set(userData)
 
-          .then(() => {
-            navigation.navigate("Home", { user: userData });
-          })
-          .catch((error) => {
-            alert(error);
-          });
+              .then(() => {
+                usersRef
+                  .doc(uid)
+                  .collection("books")
+                  .doc(bookTitle)
+                  .set(booksData);
+              })
+
+              .then(() => {
+                navigation.navigate("Home", { userData });
+              })
+              .catch((error) => {
+                alert(error);
+              });
+          }
+        );
       })
       .catch((error) => {
         alert(error);
