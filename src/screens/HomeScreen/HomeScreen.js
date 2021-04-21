@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import styles from "./styles";
 import { firebase } from "../../firebase/config";
+import PedometerScreen from "../PedometerScreen/PedometerScreen";
 
 export default function HomeScreen(props) {
   const [entityText, setEntityText] = useState("");
@@ -106,7 +107,8 @@ export default function HomeScreen(props) {
         }}
       >
         <View style={styles.token_number}>
-          <Text style={styles.token_text}>36</Text>
+        <PedometerScreen />
+          {/* <Text style={styles.token_text}></Text> */}
         </View>
         <Image
           style={styles.profile_image}
