@@ -38,10 +38,10 @@ export default function RegistrationScreen({ navigation }) {
         fetchBooks(bookTitle, bookAuthor).then(
           ({ title, authors, description, imageLinks }) => {
             const booksData = {
-              bookTitle: title,
-              bookAuthor: authors[0],
-              bookDescription: description,
-              bookImage: imageLinks.thumbnail,
+              bookTitle: title || "no title found",
+              bookAuthor: authors[0] || "no author found",
+              bookDescription: description || "no description found",
+              bookImage: imageLinks.thumbnail || "no images found",
             };
             //console.log(booksData)
 
