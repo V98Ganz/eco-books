@@ -10,6 +10,9 @@ export const fetchBooks = (title, author) => {
   return request
     .get(`volumes?q=${title}+inauthor:${author}&key=${apiKey}`)
     .then(({ data }) => {
+      if (data.totalItems === 0) {
+        return Promise.reject("Please enter a valid book silly!");
+      }
       return data.items[0].volumeInfo;
     });
 };
