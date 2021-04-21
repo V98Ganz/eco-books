@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../../firebase/config";
-import { fetchBooks } from '../../utils/utils';
+import { fetchBooks } from "../../utils/utils";
 import styles from "./styles";
 
 export default function RegistrationScreen({ navigation }) {
@@ -33,35 +33,39 @@ export default function RegistrationScreen({ navigation }) {
           id: uid,
           email,
           fullName,
-        }
-        
-        fetchBooks(bookTitle, bookAuthor).then(({ title, authors, description, imageLinks }) => {
-            
+        };
+
+        fetchBooks(bookTitle, bookAuthor).then(
+          ({ title, authors, description, imageLinks }) => {
             const booksData = {
               bookTitle: title,
               bookAuthor: authors[0],
               bookDescription: description,
-              bookImage: imageLinks.thumbnail
-            }
-            console.log(booksData)
-          
-        
-        const usersRef = firebase.firestore().collection("users");
-        usersRef
-          .doc(uid)
-          .set(userData)
+              bookImage: imageLinks.thumbnail,
+            };
+            //console.log(booksData)
 
-          .then(() => {
-            usersRef.doc(uid).collection("books").doc(bookTitle).set(booksData);
-          })
+            const usersRef = firebase.firestore().collection("users");
+            usersRef
+              .doc(uid)
+              .set(userData)
 
-          .then(() => {
-            navigation.navigate("Home", { user: userData });
-          })
-          .catch((error) => {
-            alert(error);
-          });
-        })
+              .then(() => {
+                usersRef
+                  .doc(uid)
+                  .collection("books")
+                  .doc(bookTitle)
+                  .set(booksData);
+              })
+
+              .then(() => {
+                navigation.navigate("Home", { user: userData });
+              })
+              .catch((error) => {
+                alert(error);
+              });
+          }
+        );
       })
       .catch((error) => {
         alert(error);

@@ -32,8 +32,8 @@ export default function App() {
           .get()
           .then((document) => {
             const userData = document.data();
-            setLoading(false);
             setUser(userData);
+            setLoading(false);
           })
           .catch((error) => {
             setLoading(false);
@@ -43,21 +43,32 @@ export default function App() {
       }
     });
   }, []);
-
+  console.log(user, "<<<<<< USER IN APP");
   return (
     <NavigationContainer>
-      <Stack.Navigator>
-        {user ? (
-          <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} extraData={user} />}
-          </Stack.Screen>
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={LoginScreen} />
-            <Stack.Screen name="Registration" component={RegistrationScreen} />
-          </>
-        )}
+      <Stack.Navigator initialRouteName={user ? "Home" : "Login"}>
+        <Stack.Screen name="Home">
+          {(props) => <HomeScreen {...props} user={user} />}
+        </Stack.Screen>
+        <Stack.Screen name="Login" component={LoginScreen} />
+        <Stack.Screen name="Registration" component={RegistrationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
+    // <NavigationContainer>
+    //   <Stack.Navigator>
+    //     {user ? (
+    //       <Stack.Screen name="Home">
+    //         {(props) => (
+    //           <HomeScreen {...props} extraData={user} component={HomeScreen} />
+    //         )}
+    //       </Stack.Screen>
+    //     ) : (
+    //       <>
+    //         <Stack.Screen name="Login" component={LoginScreen} />
+    //         <Stack.Screen name="Registration" component={RegistrationScreen} />
+    //       </>
+    //     )}
+    //   </Stack.Navigator>
+    // </NavigationContainer>
   );
 }
