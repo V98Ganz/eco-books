@@ -9,6 +9,7 @@ import { firebase } from "./src/firebase/config";
 if (!global.btoa) {
   global.btoa = encode;
 }
+
 if (!global.atob) {
   global.atob = decode;
 }
@@ -18,10 +19,6 @@ const Stack = createStackNavigator();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
-
-  // if (loading) {
-  //   return <></>;
-  // }
 
   useEffect(() => {
     const usersRef = firebase.firestore().collection("users");
@@ -43,7 +40,11 @@ export default function App() {
       }
     });
   }, []);
-  console.log(user, "<<<<<< USER IN APP");
+
+  if (loading) {
+    return <></>;
+  }
+
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={user ? "Home" : "Login"}>
@@ -72,3 +73,5 @@ export default function App() {
     // </NavigationContainer>
   );
 }
+
+// move props from individual component

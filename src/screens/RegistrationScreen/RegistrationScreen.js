@@ -59,7 +59,7 @@ export default function RegistrationScreen({ navigation }) {
               })
 
               .then(() => {
-                navigation.navigate("Home", { user: userData });
+                navigation.navigate("Home", { userData });
               })
               .catch((error) => {
                 alert(error);
