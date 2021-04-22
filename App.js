@@ -1,10 +1,11 @@
-import "react-native-gesture-handler";
-import React, { useEffect, useState } from "react";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { LoginScreen, HomeScreen, RegistrationScreen, PedometerScreen } from "./src/screens";
 import { decode, encode } from "base-64";
+import React, { useEffect, useState } from "react";
+import "react-native-gesture-handler";
 import { firebase } from "./src/firebase/config";
+import { HomeScreen, LoginScreen, RegistrationScreen } from "./src/screens";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -15,6 +16,7 @@ if (!global.atob) {
 }
 
 const Stack = createStackNavigator();
+
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -49,29 +51,14 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName={user ? "Home" : "Login"}>
         <Stack.Screen name="Home">
-          {(props) => <HomeScreen {...props} user={user} />}
+            {(props) => <HomeScreen {...props} user={user} />}
         </Stack.Screen>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Registration" component={RegistrationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    // <NavigationContainer>
-    //   <Stack.Navigator>
-    //     {user ? (
-    //       <Stack.Screen name="Home">
-    //         {(props) => (
-    //           <HomeScreen {...props} extraData={user} component={HomeScreen} />
-    //         )}
-    //       </Stack.Screen>
-    //     ) : (
-    //       <>
-    //         <Stack.Screen name="Login" component={LoginScreen} />
-    //         <Stack.Screen name="Registration" component={RegistrationScreen} />
-    //       </>
-    //     )}
-    //   </Stack.Navigator>
-    // </NavigationContainer>
+    
   );
 }
 
-// move props from individual component
+
