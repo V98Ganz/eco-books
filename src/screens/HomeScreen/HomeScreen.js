@@ -1,11 +1,23 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Text } from "react-native";
-import { CoinBankScreen, UserScreen } from "../../screens";
+import { Text, Image } from "react-native";
+import { default as CoinBankScreen } from "../CoinBankScreen/CoinBankScreen";
+import { default as UserScreen } from "../UserScreen/UserScreen";
+import { firebase } from "../../firebase/config";
 
 const Tab = createBottomTabNavigator();
 
 export function HomeScreenContents(props) {
+  // let userRef = firebase
+  //   .firestore()
+  //   .collection("users")
+  //   .where("ZD1GHPqeISUH5ViOhFP8B7YjIrv1", "==", "id")
+  //   // .collection("books")
+  //   .get()
+  //   .then((querySnapshot) => {
+  //     console.log(querySnapshot);
+  //   });
+
   return <Text>Home screen</Text>;
 }
 
