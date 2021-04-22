@@ -59,7 +59,7 @@ export default class PedometerScreen extends React.Component {
   };
 
   render() {
-      console.log(this.state)
+      console.log(this.props.user)
     return (
       <View style={styles.container}>
         {/* <Text>Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}</Text>

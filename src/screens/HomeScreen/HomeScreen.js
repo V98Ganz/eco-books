@@ -16,7 +16,9 @@ export default function HomeScreen(props) {
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreenContents}></Tab.Screen>
       <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
-      <Tab.Screen name="CoinBank" component={CoinBankScreen}></Tab.Screen>
+      <Tab.Screen name="CoinBank">
+            {(props) => <CoinBankScreen {...props} user={user} />}
+        </Tab.Screen>
     </Tab.Navigator>
   )
 
