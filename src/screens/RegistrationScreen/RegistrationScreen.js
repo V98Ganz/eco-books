@@ -12,9 +12,9 @@ export default function RegistrationScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
-  const [bookDescription, setBookDescription] = useState("");
-  const [bookImage, setBookImage] = useState("");
-  const [isValid, setIsValid] = useState(true);
+  // const [bookDescription, setBookDescription] = useState("");
+  // const [bookImage, setBookImage] = useState("");
+  // const [isValid, setIsValid] = useState(true);
 
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
@@ -25,10 +25,14 @@ export default function RegistrationScreen({ navigation }) {
       alert("Passwords don't match.");
       return;
     }
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((response) => {
+    fetchBooks(bookTitle, bookAuthor)
+      .then((bookInfo) => {
+        return Promise.all([
+          firebase.auth().createUserWithEmailAndPassword(email, password),
+          bookInfo,
+        ]);
+      })
+      .then(([response, bookInfo]) => {
         const uid = response.user.uid;
         const userData = {
           id: uid,
@@ -36,21 +40,22 @@ export default function RegistrationScreen({ navigation }) {
           fullName,
         };
 
-        return Promise.all([fetchBooks(bookTitle, bookAuthor), userData]);
-      })
-      .then(([{ title, authors, description, imageLinks }, userData]) => {
         const booksData = {
-          bookTitle: title || "no title found",
-          bookAuthor: authors[0] || "no author found",
-          bookDescription: description || "no description found",
-          bookImage: imageLinks.thumbnail || "no images found",
+          bookTitle: bookInfo.title || "no title found",
+          bookAuthor: bookInfo.authors[0] || "no author found",
+          bookDescription: bookInfo.description || "no description found",
+          bookImage: bookInfo.imageLinks.thumbnail || "no images found",
         };
 
         const usersRef = firebase.firestore().collection("users");
         return Promise.all([
           userData,
           usersRef.doc(userData.id).set(userData),
-          usersRef.doc(userData.id).collection("books").doc(bookTitle).set(booksData),
+          usersRef
+            .doc(userData.id)
+            .collection("books")
+            .doc(bookTitle)
+            .set(booksData),
         ]);
       })
       .then(([userData]) => {
@@ -148,3 +153,38 @@ export default function RegistrationScreen({ navigation }) {
     </View>
   );
 }
+
+// firebase
+//       .auth()
+//       .createUserWithEmailAndPassword(email, password)
+//       .then((response) => {
+//         const uid = response.user.uid;
+//         const userData = {
+//           id: uid,
+//           email,
+//           fullName,
+//         };
+
+//         return Promise.all([fetchBooks(bookTitle, bookAuthor), userData]);
+//       })
+//       .then(([{ title, authors, description, imageLinks }, userData]) => {
+//         const booksData = {
+//           bookTitle: title || "no title found",
+//           bookAuthor: authors[0] || "no author found",
+//           bookDescription: description || "no description found",
+//           bookImage: imageLinks.thumbnail || "no images found",
+//         };
+
+//         const usersRef = firebase.firestore().collection("users");
+//         return Promise.all([
+//           userData,
+//           usersRef.doc(userData.id).set(userData),
+//           usersRef.doc(userData.id).collection("books").doc(bookTitle).set(booksData),
+//         ]);
+//       })
+//       .then(([userData]) => {
+//         navigation.navigate("Home", { userData });
+//       })
+//       .catch((error) => {
+//         alert(error);
+//       });
