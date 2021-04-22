@@ -34,9 +34,6 @@ export default class PedometerScreen extends React.Component {
         if (doc.exists) {
           this.setState({ pastCoins: doc.data() })
         }
-        else {
-          this.setState({ pastCoins: 0 })
-        }
       })
   }
 
