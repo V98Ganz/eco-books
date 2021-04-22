@@ -1,18 +1,3 @@
-import React, { useEffect, useState } from "react";
-import {
-  FlatList,
-  Keyboard,
-  Text,
-  TextInput,
-  Image,
-  TouchableOpacity,
-  View,
-  SafeAreaView,
-  ScrollView,
-} from "react-native";
-import styles from "./styles";
-import { firebase } from "../../firebase/config";
-import PedometerScreen from "../PedometerScreen/PedometerScreen";
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import React from "react";
 import { Text } from 'react-native';
