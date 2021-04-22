@@ -59,7 +59,7 @@ export default function RegistrationScreen({ navigation }) {
         ]);
       })
       .then(([userData]) => {
-        navigation.navigate("Home", { userData });
+        navigation.navigate("EcoBooks", { userData });
       })
       .catch((error) => {
         alert(error);
