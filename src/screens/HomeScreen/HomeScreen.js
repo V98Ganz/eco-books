@@ -17,13 +17,12 @@ export default function HomeScreen(props) {
     userObject = props.route.params;
   }
 
-  console.log(userObject);
   return (
     <Tab.Navigator>
       <Tab.Screen name="Home" component={HomeScreenContents}></Tab.Screen>
       <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
       <Tab.Screen name="CoinBank">
-            {(props) => <CoinBankScreen {...props} user={user} />}
+            {(props) => <CoinBankScreen {...props} user={userObject} />}
         </Tab.Screen>
     </Tab.Navigator>
   );
