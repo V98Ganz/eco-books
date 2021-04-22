@@ -1,4 +1,3 @@
-
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { decode, encode } from "base-64";
@@ -16,7 +15,6 @@ if (!global.atob) {
 }
 
 const Stack = createStackNavigator();
-
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -49,16 +47,13 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={user ? "Home" : "Login"}>
-        <Stack.Screen name="Home">
-            {(props) => <HomeScreen {...props} user={user} />}
+      <Stack.Navigator initialRouteName={user ? "EcoBooks" : "Login"}>
+        <Stack.Screen name="EcoBooks">
+          {(props) => <HomeScreen {...props} user={user} />}
         </Stack.Screen>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Registration" component={RegistrationScreen} />
       </Stack.Navigator>
     </NavigationContainer>
-    
   );
 }
-
-

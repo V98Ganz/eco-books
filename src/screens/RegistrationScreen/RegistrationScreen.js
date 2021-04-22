@@ -50,11 +50,15 @@ export default function RegistrationScreen({ navigation }) {
         return Promise.all([
           userData,
           usersRef.doc(userData.id).set(userData),
-          usersRef.doc(userData.id).collection("books").doc(bookTitle).set(booksData),
+          usersRef
+            .doc(userData.id)
+            .collection("books")
+            .doc(bookTitle)
+            .set(booksData),
         ]);
       })
       .then(([userData]) => {
-        navigation.navigate("Home", { userData });
+        navigation.navigate("EcoBooks", { userData });
       })
       .catch((error) => {
         alert(error);
