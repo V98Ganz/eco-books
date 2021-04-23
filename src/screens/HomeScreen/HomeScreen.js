@@ -3,6 +3,7 @@ import React from "react";
 import { default as BookShop } from "../BookShop/BookShop";
 import { default as CoinBankScreen } from "../CoinBankScreen/CoinBankScreen";
 import { default as UserScreen } from "../UserScreen/UserScreen";
+import { default as ChatMessengerScreen } from "../ChatMessengerScreen/ChatMessengerScreen";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,13 +17,16 @@ export default function HomeScreen(props) {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="BookShop" >
+      <Tab.Screen name="BookShop">
         {(props) => <BookShop {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
+      <Tab.Screen name="Messages">
+        {(props) => <ChatMessengerScreen {...props} user={userObject} />}
+      </Tab.Screen>
       <Tab.Screen name="CoinBank">
-            {(props) => <CoinBankScreen {...props} user={userObject} />}
-        </Tab.Screen>
+        {(props) => <CoinBankScreen {...props} user={userObject} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 
