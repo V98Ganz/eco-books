@@ -7,12 +7,11 @@ export default class Book extends Component {
   }
   
   changeState = () => {
-    console.log("we are in changeState function")
     this.setState((currentState) => {
       if (currentState.showingPicture) {
-        return this.setState({ showingPicture: false })
+        return { showingPicture: false }
       } else {
-        return this.setState({ showingPicture: true })
+        return { showingPicture: true }
       }
     })
   }
@@ -22,7 +21,7 @@ export default class Book extends Component {
     return (
       showingPicture ? 
       <TouchableHighlight onPress={() => this.changeState()} >
-        <Image source={{uri: this.props.bookImage}} style={{width: 400, height: 400}}  />
+        <Image source={{uri: this.props.bookImage}} style={{width: 400, height: 550}}  />
       </TouchableHighlight>
       : 
       <TouchableHighlight onPress={() => this.changeState()}>
