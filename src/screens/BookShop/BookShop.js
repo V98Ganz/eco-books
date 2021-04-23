@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import { Image, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { firebase } from '../../firebase/config';
+import { default as Book } from '../Book/Book';
 
  export default class BookShop extends Component {
   state = {
@@ -24,12 +25,11 @@ import { firebase } from '../../firebase/config';
 
     
     render() {
-      const { bookImage } = this.state.books
-      console.log(bookImage)
+      const { bookImage, bookDescription, bookAuthor, bookTitle } = this.state.books
+      
       return (
           <View>
-            <Text>Home screen</Text>
-            <Image source={{uri: bookImage}} style={{width: 200, height: 200}} />
+            <Book bookDescription={bookDescription} bookImage={bookImage} bookAuthor={bookAuthor} bookTitle={bookTitle}/>
           </View>
       )
     };
