@@ -1,13 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Text } from "react-native";
-import { CoinBankScreen, UserScreen } from "../../screens";
+import { default as BookShop } from "../BookShop/BookShop";
+import { default as CoinBankScreen } from "../CoinBankScreen/CoinBankScreen";
+import { default as UserScreen } from "../UserScreen/UserScreen";
 
 const Tab = createBottomTabNavigator();
-
-export function HomeScreenContents(props) {
-  return <Text>Home screen</Text>;
-}
 
 export default function HomeScreen(props) {
   let userObject = {};
@@ -19,7 +16,9 @@ export default function HomeScreen(props) {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreenContents}></Tab.Screen>
+      <Tab.Screen name="BookShop" >
+        {(props) => <BookShop {...props} user={userObject} />}
+      </Tab.Screen>
       <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
       <Tab.Screen name="CoinBank">
             {(props) => <CoinBankScreen {...props} user={userObject} />}
