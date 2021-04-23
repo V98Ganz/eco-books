@@ -1,25 +1,10 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import React from "react";
-import { Text, Image } from "react-native";
+import { default as BookShop } from "../BookShop/BookShop";
 import { default as CoinBankScreen } from "../CoinBankScreen/CoinBankScreen";
 import { default as UserScreen } from "../UserScreen/UserScreen";
-import { firebase } from "../../firebase/config";
 
 const Tab = createBottomTabNavigator();
-
-export function HomeScreenContents(props) {
-  // let userRef = firebase
-  //   .firestore()
-  //   .collection("users")
-  //   .where("ZD1GHPqeISUH5ViOhFP8B7YjIrv1", "==", "id")
-  //   // .collection("books")
-  //   .get()
-  //   .then((querySnapshot) => {
-  //     console.log(querySnapshot);
-  //   });
-
-  return <Text>Home screen</Text>;
-}
 
 export default function HomeScreen(props) {
   let userObject = {};
@@ -29,10 +14,12 @@ export default function HomeScreen(props) {
     userObject = props.route.params;
   }
 
-  console.log(userObject);
+ 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="Home" component={HomeScreenContents}></Tab.Screen>
+      <Tab.Screen name="BookShop" >
+        {(props) => <BookShop {...props} user={userObject} />}
+      </Tab.Screen>
       <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
       <Tab.Screen name="CoinBank" component={CoinBankScreen}></Tab.Screen>
     </Tab.Navigator>
