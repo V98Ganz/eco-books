@@ -42,7 +42,7 @@ export default class ChatMessengerScreen extends React.Component {
     this.setState({
       renderOneConversation: false,
     });
-  }
+  };
 
   startChat = (id) => {
     firebase
@@ -50,13 +50,22 @@ export default class ChatMessengerScreen extends React.Component {
       .collection("chatRooms")
       .add({
         users: [id, "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"],
+      })
+      .then((doc) => {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(id)
+          .collection("active-conversations")
+          .doc("conversations")
+          .set({
+            a: doc.id,
+          });
       });
   };
 
-  
   render() {
     const currentUser = this.props.user.id;
-    console.log(this.state)
     if (this.state.renderOneConversation === false) {
       return (
         <View>
@@ -72,20 +81,17 @@ export default class ChatMessengerScreen extends React.Component {
           />
         </View>
       );
-    }
-     else if (this.state.renderOneConversation === true) {
+    } else if (this.state.renderOneConversation === true) {
       return (
         <View>
           <Text>Go back</Text>
-          <Button
-            title="Message"
-            onPress={() =>
-              this.goBack()
-            }
+          <Button title="Go back!" onPress={() => this.goBack()} />
+          <ConversationScreen
+            sender={currentUser}
+            receiver={"ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"}
           />
-        <ConversationScreen />
         </View>
-      )
+      );
     }
   }
 }
