@@ -2,7 +2,7 @@ import React from "react";
 import { Button, View, Text } from "react-native";
 import { firebase } from "../../firebase/config";
 
-export default function ChatMessengerScreen({ props, navigation }) {
+export default function ChatMessengerScreen(props, { navigation }) {
   state = {};
 
   const checkDataBaseForChatRoom = async (senderId, receiverId) => {
@@ -12,19 +12,24 @@ export default function ChatMessengerScreen({ props, navigation }) {
       collection[doc.id] = doc.data();
     });
 
-    for (let chat in collection) {
-      const values = Object.values(collection);
-      for (let obj of values) {
-        const matchedIds = obj.users.every(
-          (value) => value === senderId || value === receiverId
-        );
+    const values = Object.values(collection);
+    let isMatched = "";
 
-        return matchedIds;
-      }
+    for (let obj of values) {
+      const matchedIds = obj.users.every(
+        (value) => value === senderId || value === receiverId
+      );
+
+      isMatched = matchedIds;
     }
+    isMatched === true ? goToChat() : startChat(senderId);
   };
 
-  startChat = (id) => {
+  const goToChat = () => {
+    navigation.navigate;
+  };
+
+  const startChat = (id) => {
     firebase
       .firestore()
       .collection("chatRooms")
@@ -33,18 +38,16 @@ export default function ChatMessengerScreen({ props, navigation }) {
       });
   };
 
-  console.log(props);
-
-  //   const currentUser = props.user.id;
+  const currentUser = props.user.id;
   return (
     <View>
-      {/* <Text>Press to send message!</Text>
+      <Text>Press to send message!</Text>
       <Button
         title="Message"
         onPress={() =>
           checkDataBaseForChatRoom(currentUser, "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1")
         }
-      /> */}
+      />
     </View>
   );
 }
