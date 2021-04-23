@@ -14,14 +14,15 @@ export default function HomeScreen(props) {
     userObject = props.route.params;
   }
 
- 
   return (
     <Tab.Navigator>
       <Tab.Screen name="BookShop" >
         {(props) => <BookShop {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
-      <Tab.Screen name="CoinBank" component={CoinBankScreen}></Tab.Screen>
+      <Tab.Screen name="CoinBank">
+            {(props) => <CoinBankScreen {...props} user={userObject} />}
+        </Tab.Screen>
     </Tab.Navigator>
   );
 
