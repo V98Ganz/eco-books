@@ -2,10 +2,10 @@ import React from "react";
 import { Button, View, Text } from "react-native";
 import { firebase } from "../../firebase/config";
 
-class ChatMessengerScreen extends React.Component {
+export default function ChatMessengerScreen({ props, navigation }) {
   state = {};
 
-  async checkDataBaseForChatRoom(senderId, receiverId) {
+  const checkDataBaseForChatRoom = async (senderId, receiverId) => {
     const snapshot = await firebase.firestore().collection("chatRooms").get();
     const collection = {};
     snapshot.forEach((doc) => {
@@ -22,7 +22,7 @@ class ChatMessengerScreen extends React.Component {
         return matchedIds;
       }
     }
-  }
+  };
 
   startChat = (id) => {
     firebase
@@ -33,23 +33,20 @@ class ChatMessengerScreen extends React.Component {
       });
   };
 
-  render() {
-    const currentUser = this.props.user.id;
-    return (
-      <View>
-        <Text>Press to send message!</Text>
-        <Button
-          title="Message"
-          onPress={() =>
-            this.checkDataBaseForChatRoom(
-              currentUser,
-              "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"
-            )
-          }
-        />
-      </View>
-    );
-  }
+  console.log(props);
+
+  //   const currentUser = props.user.id;
+  return (
+    <View>
+      {/* <Text>Press to send message!</Text>
+      <Button
+        title="Message"
+        onPress={() =>
+          checkDataBaseForChatRoom(currentUser, "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1")
+        }
+      /> */}
+    </View>
+  );
 }
 
-export default ChatMessengerScreen;
+// export default ChatMessengerScreen;
