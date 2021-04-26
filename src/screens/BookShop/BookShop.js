@@ -1,36 +1,29 @@
 import React, { Component } from "react";
-import { Image, Text, View } from "react-native";
+import { Image, Text, View, Dimensions } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { firebase } from "../../firebase/config";
-import styles from "../LoginScreen/styles";
+// import styles from "../LoginScreen/styles";
+import BookCardInfo from "./BookCardInfo";
+import { StyleSheet } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default class BookShop extends Component {
   state = {
     books: [],
-    showingPicture: true,
-  };
-
-  changeState = () => {
-    this.setState((currentState) => {
-      if (currentState.showingPicture) {
-        return { showingPicture: false };
-      } else {
-        return { showingPicture: true };
-      }
-    });
   };
 
   _renderItem = ({ item, index }) => {
     return (
       <View style={styles.slide}>
-        <Image
-          source={{ uri: item.bookImage }}
-          style={{ width: 200, height: 200 }}
+        <BookCardInfo
+          bookAuthor={item.bookAuthor}
+          bookImage={item.bookImage}
+          bookTitle={item.bookTitle}
+          bookDescription={item.bookDescription}
+          bookCondition={item.bookCondition}
+          bookOwnerId={item.userId}
+          user={this.props.user}
         />
-        <Text style={styles.title}>{item.bookAuthor}</Text>
-        <Text style={styles.title}>{item.bookTitle}</Text>
-        <Text stlye={styles.body}>{item.bookDescription}</Text>
-        <Text style={styles.title}>{item.bookCondition}</Text>
       </View>
     );
   };
@@ -53,6 +46,7 @@ export default class BookShop extends Component {
             .then((querySnapshot) => {
               querySnapshot.forEach((doc) => {
                 const bookData = doc.data();
+                bookData.userId = userId;
                 usersBooks.push(bookData);
               });
               this.setState((currentState) => {
@@ -66,16 +60,31 @@ export default class BookShop extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.bookshopBackground}>
         <Carousel
           layout={"default"}
           ref={(ref) => (this.carousel = ref)}
           data={this.state.books}
           renderItem={this._renderItem}
-          sliderWidth={300}
+          sliderWidth={Dimensions.get("window").width}
+          sliderHeight={450}
           itemWidth={300}
         />
       </View>
     );
   }
 }
+const styles = StyleSheet.create({
+  slide: {
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
+    marginTop: 100,
+    overflow: "scroll",
+    height: 450,
+    borderRadius: 10,
+  },
+  bookshopBackground: {
+    backgroundColor: "#1c9f5e",
+  },
+});

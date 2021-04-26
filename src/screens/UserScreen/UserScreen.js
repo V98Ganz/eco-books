@@ -64,7 +64,6 @@ export default class UserScreen extends Component {
     if (this.state.isLoading) {
       return <></>;
     }
-    console.log(this.state.myBooks);
     return (
       <View>
         <Text>Welcome back {this.props.user.fullName}!</Text>

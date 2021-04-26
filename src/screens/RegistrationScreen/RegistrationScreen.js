@@ -61,7 +61,7 @@ export default function RegistrationScreen({ navigation }) {
         ]);
       })
       .then(([userData]) => {
-        navigation.navigate("EcoBooks", { userData });
+        navigation.navigate("RegistrationCoinInfo", { userData });
       })
       .catch((error) => {
         alert(error);
