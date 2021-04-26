@@ -1,14 +1,13 @@
 import React, { Component } from "react";
 import {
-  View,
-  Text,
   Image,
-  TouchableHighlight,
-  TouchableOpacity,
-  ScrollView,
+
+
+  ScrollView, StyleSheet, Text,
+
+
+  TouchableOpacity, View
 } from "react-native";
-import { StyleSheet } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default class BookCardInfo extends Component {
   state = {
@@ -54,5 +53,6 @@ export default class BookCardInfo extends Component {
 const styles = StyleSheet.create({
   bookInfo: {
     overflow: "scroll",
+    height: 450
   },
 });

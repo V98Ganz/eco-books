@@ -1,10 +1,32 @@
 import React, { Component } from "react";
-import { Text, View, TouchableOpacity } from "react-native";
+import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { firebase } from "../../firebase/config";
 
 export default class RegistrationCoinInfo extends Component {
   state = {
     myBooks: [],
+    bookValue: 0,
+    isLoading: true
   };
+
+  componentDidMount = () => {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(this.props.route.params.userData.id)
+      .collection("books")
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const bookData = doc.data();
+          return this.setState({ myBooks: bookData, isLoading: false });
+        });
+      });
+  };
+
+  handleBookCoin = (text) => {
+    this.setState({bookValue: text})
+  }
 
   nextPage = () => {
     this.props.navigation.navigate("EcoBooks", {
@@ -13,17 +35,29 @@ export default class RegistrationCoinInfo extends Component {
   };
 
   render() {
+    console.log(this.state.bookValue)
+    if (this.state.isLoading) {
+      return <></>;
+    }
+    
     return (
       <View>
+        <Text>Welcome to EcoBooks!</Text>
         <Text>
-          Instructions: "Lorem ipsum dolor sit amet, consectetur adipiscing
-          elit, sed do eiusmod tempor incididunt ut labore et dolore magna
-          aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-          laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor
-          in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum."
+          Here is how everything works...
         </Text>
+        <Text>You have added {this.state.myBooks.bookTitle} for sale, please add how many BookCoins you would like to sell your book for.</Text>
+        <Image
+          source={{ uri: this.state.myBooks.bookImage }}
+          style={{ width: 295, height: 450, resizeMode: "contain" }}
+        />
+        <TextInput
+          placeholderTextColor="#aaaaaa"
+          placeholder="Input BookCoin price"
+          onChangeText={this.handleBookCoin}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
         <TouchableOpacity onPress={this.nextPage}>
           <Text>Get started!</Text>
         </TouchableOpacity>

@@ -1,11 +1,9 @@
 import React, { Component } from "react";
-import { Image, Text, View, Dimensions } from "react-native";
+import { Dimensions, StyleSheet, View } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { firebase } from "../../firebase/config";
 // import styles from "../LoginScreen/styles";
 import BookCardInfo from "./BookCardInfo";
-import { StyleSheet } from "react-native";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 export default class BookShop extends Component {
   state = {
