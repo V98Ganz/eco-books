@@ -61,6 +61,18 @@ export default class ChatMessengerScreen extends React.Component {
           .set({
             a: doc.id,
           });
+        firebase
+          .firestore()
+          .collection("users")
+          .doc("ivBQI1QUGDOZM6j9kpIs9Cwa6zy1")
+          .collection("active-conversations")
+          .doc("conversations")
+          .set({
+            a: doc.id,
+          });
+      })
+      .then(() => {
+        this.goToChat();
       });
   };
 
