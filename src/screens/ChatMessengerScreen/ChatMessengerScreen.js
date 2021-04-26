@@ -11,10 +11,11 @@ const Stack = createStackNavigator();
 export default class ChatMessengerScreen extends React.Component {
   state = {
     renderOneConversation: false,
-    convoIds: [],
+    convoIds: {},
+    roomId: null,
   };
 
-  checkDataBaseForChatRoom = async (senderId, receiverId) => {
+  checkDataBaseForChatRoom = async (senderId, receiverId, roomId) => {
     const snapshot = await firebase.firestore().collection("chatRooms").get();
     const collection = {};
     snapshot.forEach((doc) => {
@@ -31,12 +32,13 @@ export default class ChatMessengerScreen extends React.Component {
 
       isMatched = matchedIds;
     }
-    isMatched === true ? this.goToChat() : this.startChat(senderId);
+    isMatched === true ? this.goToChat(roomId) : this.startChat(senderId);
   };
 
-  goToChat = () => {
+  goToChat = (roomId) => {
     this.setState({
       renderOneConversation: true,
+      roomId: roomId,
     });
   };
 
@@ -73,8 +75,8 @@ export default class ChatMessengerScreen extends React.Component {
           .doc(id)
           .collection("active-conversations")
           .doc("conversations")
-          .set({
-            a: doc.id,
+          .add({
+            [doc.id]: doc.id,
           });
         firebase
           .firestore()
@@ -82,8 +84,8 @@ export default class ChatMessengerScreen extends React.Component {
           .doc("ivBQI1QUGDOZM6j9kpIs9Cwa6zy1")
           .collection("active-conversations")
           .doc("conversations")
-          .set({
-            a: doc.id,
+          .add({
+            [doc.id]: doc.id,
           });
       })
       .then(() => {
@@ -92,8 +94,8 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
+    console.log(this.state.convoIds);
     const { roomId } = this.state.convoIds;
-    console.log(roomId);
     const currentUser = this.props.user.id;
     if (this.state.renderOneConversation === false) {
       if (roomId) {
@@ -103,7 +105,16 @@ export default class ChatMessengerScreen extends React.Component {
               return (
                 <View style={styles.roomLink} key={room}>
                   <Text style={styles.chat_link_text}>{room}</Text>
-                  <TouchableOpacity style={styles.chat_button}>
+                  <TouchableOpacity
+                    style={styles.chat_button}
+                    onPress={() =>
+                      this.checkDataBaseForChatRoom(
+                        currentUser,
+                        "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1",
+                        room
+                      )
+                    }
+                  >
                     <Text>Enter Chat</Text>
                   </TouchableOpacity>
                 </View>
@@ -122,6 +133,7 @@ export default class ChatMessengerScreen extends React.Component {
           <ConversationScreen
             sender={currentUser}
             receiver={"ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"}
+            roomId={this.state.roomId}
           />
         </View>
       );

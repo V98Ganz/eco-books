@@ -9,19 +9,19 @@ export default class ConversationScreen extends React.Component {
     convo: [],
   };
 
-  getMessagesFromChatroom = async (chatRoomId) => {
+  getMessagesFromChatroom = async () => {
     const snapshot = await firebase
       .firestore()
       .collection("chatRooms")
-      .doc("XzEvusxwsofJzrxz4Emi")
+      .doc(this.props.roomId)
       .collection("Messages")
       .get();
 
     const conversation = {};
+
     snapshot.forEach((doc) => {
       conversation[doc.id] = doc.data();
     });
-
     const chats = Object.values(conversation);
     return chats;
   };

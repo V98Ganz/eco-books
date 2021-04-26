@@ -25,16 +25,16 @@ export default class PedometerScreen extends React.Component {
   componentDidMount() {
     firebase
       .firestore()
-      .collection('users')
+      .collection("users")
       .doc(this.props.user.id)
-      .collection('coins')
-      .doc('coins')
+      .collection("coins")
+      .doc("coins")
       .get()
       .then((doc) => {
         if (doc.exists) {
-          this.setState({ pastCoins: doc.data() })
+          this.setState({ pastCoins: doc.data() });
         }
-      })
+      });
   }
 
   startWorkout() {
@@ -45,8 +45,9 @@ export default class PedometerScreen extends React.Component {
   sendToFirestore() {
     Alert.alert("Workout Stopped");
     this._unsubscribe();
-    
-    const coins = stepsToCoins(this.state.currentStepCount) + this.state.pastCoins.coins
+
+    const coins =
+      stepsToCoins(this.state.currentStepCount) + this.state.pastCoins.coins;
 
     firebase
       .firestore()
@@ -61,10 +62,10 @@ export default class PedometerScreen extends React.Component {
         this.setState({
           currentStepCount: 0,
           pastCoins: {
-            coins: coins
-          }
-        })
-      })
+            coins: coins,
+          },
+        });
+      });
   }
   _subscribe = () => {
     this._subscription = Pedometer.watchStepCount((result) => {
@@ -107,13 +108,12 @@ export default class PedometerScreen extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>Your Coins</Text>
           <Text>{this.state.pastCoins.coins}</Text>
-          </View>
+        </View>
         <View>
           <Text style={styles.title}>Press to start step count</Text>
           <Button title="Start" onPress={() => this.startWorkout()} />
@@ -133,8 +133,8 @@ export default class PedometerScreen extends React.Component {
 }
 
 const stepsToCoins = (steps) => {
-  return steps / 100
-}
+  return steps / 100;
+};
 
 const styles = StyleSheet.create({
   container: {
