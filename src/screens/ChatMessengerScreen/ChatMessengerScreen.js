@@ -15,7 +15,7 @@ export default class ChatMessengerScreen extends React.Component {
     roomId: null,
   };
 
-  checkDataBaseForChatRoom = async (senderId, receiverId, roomId) => {
+  checkDataBaseForChatRoom = async (senderId, receiverId) => {
     const snapshot = await firebase.firestore().collection("chatRooms").get();
     const collection = {};
     snapshot.forEach((doc) => {
@@ -23,16 +23,25 @@ export default class ChatMessengerScreen extends React.Component {
     });
 
     const values = Object.values(collection);
-    let isMatched = "";
+    let isMatched = [];
 
     for (let obj of values) {
       const matchedIds = obj.users.every(
         (value) => value === senderId || value === receiverId
       );
-
-      isMatched = matchedIds;
+      isMatched.push(matchedIds);
     }
-    isMatched === true ? this.goToChat(roomId) : this.startChat(senderId);
+    return isMatched
+  };
+
+  queryCheck = async (senderId, receiverId, roomId) => {
+    const result = await this.checkDataBaseForChatRoom(senderId, receiverId);
+    const isThereARoom = await result.find((item => item === true))
+    if (isThereARoom) {
+      this.goToChat(roomId);
+    } else {
+      this.startChat(senderId)
+    }
   };
 
   goToChat = (roomId) => {
@@ -66,7 +75,7 @@ export default class ChatMessengerScreen extends React.Component {
       .firestore()
       .collection("chatRooms")
       .add({
-        users: [id, "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"],
+        users: [id, "GR9DItq1dphL7kXudFEypKqmUix1"],
       })
       .then((doc) => {
         firebase
@@ -75,17 +84,17 @@ export default class ChatMessengerScreen extends React.Component {
           .doc(id)
           .collection("active-conversations")
           .doc("conversations")
-          .add({
-            [doc.id]: doc.id,
+          .update({
+            roomId: firebase.firestore.FieldValue.arrayUnion(doc.id),
           });
         firebase
           .firestore()
           .collection("users")
-          .doc("ivBQI1QUGDOZM6j9kpIs9Cwa6zy1")
+          .doc("GR9DItq1dphL7kXudFEypKqmUix1")
           .collection("active-conversations")
           .doc("conversations")
-          .add({
-            [doc.id]: doc.id,
+          .update({
+            roomId: firebase.firestore.FieldValue.arrayUnion(doc.id),
           });
       })
       .then(() => {
@@ -94,7 +103,6 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
-    console.log(this.state.convoIds);
     const { roomId } = this.state.convoIds;
     const currentUser = this.props.user.id;
     if (this.state.renderOneConversation === false) {
@@ -108,9 +116,9 @@ export default class ChatMessengerScreen extends React.Component {
                   <TouchableOpacity
                     style={styles.chat_button}
                     onPress={() =>
-                      this.checkDataBaseForChatRoom(
+                      this.queryCheck(
                         currentUser,
-                        "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1",
+                        "GR9DItq1dphL7kXudFEypKqmUix1",
                         room
                       )
                     }
@@ -132,7 +140,7 @@ export default class ChatMessengerScreen extends React.Component {
           <Button title="Go back!" onPress={() => this.goBack()} />
           <ConversationScreen
             sender={currentUser}
-            receiver={"ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"}
+            receiver={"GR9DItq1dphL7kXudFEypKqmUix1"}
             roomId={this.state.roomId}
           />
         </View>
