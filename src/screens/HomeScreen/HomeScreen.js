@@ -16,13 +16,16 @@ export default function HomeScreen(props) {
 
   return (
     <Tab.Navigator>
-      <Tab.Screen name="BookShop" >
+      <Tab.Screen name="BookShop">
         {(props) => <BookShop {...props} user={userObject} />}
       </Tab.Screen>
-      <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
+      <Tab.Screen name="UserProfile">
+        {(props) => <UserScreen {...props} user={userObject} />}
+      </Tab.Screen>
+      {/* <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen> */}
       <Tab.Screen name="CoinBank">
-            {(props) => <CoinBankScreen {...props} user={userObject} />}
-        </Tab.Screen>
+        {(props) => <CoinBankScreen {...props} user={userObject} />}
+      </Tab.Screen>
     </Tab.Navigator>
   );
 

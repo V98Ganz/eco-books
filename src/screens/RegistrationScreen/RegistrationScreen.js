@@ -4,6 +4,7 @@ import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view
 import { firebase } from "../../firebase/config";
 import { fetchBooks } from "../../utils/utils";
 import styles from "./styles";
+import { Picker } from "@react-native-picker/picker";
 
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -12,7 +13,7 @@ export default function RegistrationScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
-  // const [bookDescription, setBookDescription] = useState("");
+  const [bookCondition, setBookCondition] = useState("Brand new");
   // const [bookImage, setBookImage] = useState("");
   // const [isValid, setIsValid] = useState(true);
 
@@ -45,6 +46,7 @@ export default function RegistrationScreen({ navigation }) {
           bookAuthor: bookInfo.authors[0] || "no author found",
           bookDescription: bookInfo.description || "no description found",
           bookImage: bookInfo.imageLinks.thumbnail || "no images found",
+          bookCondition: bookCondition,
         };
 
         const usersRef = firebase.firestore().collection("users");
@@ -134,6 +136,22 @@ export default function RegistrationScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
+        <Picker
+          selectedValue={bookCondition}
+          onValueChange={(currentCondition) =>
+            setBookCondition(currentCondition)
+          }
+        >
+          <Picker.Item label="Brand new" value="Brand new" />
+          <Picker.Item
+            label="Used with slight wear"
+            value="Used with slight wear"
+          />
+          <Picker.Item
+            label="Fair wear and tear, all pages present"
+            value="Fair wear and tear, all pages present"
+          />
+        </Picker>
 
         <TouchableOpacity
           style={styles.button}
