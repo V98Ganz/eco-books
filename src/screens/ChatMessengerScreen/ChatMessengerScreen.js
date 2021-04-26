@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text } from "react-native";
+import { Button, View, Text, ScrollView } from "react-native";
 import { firebase } from "../../firebase/config";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -91,23 +91,21 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
-    console.log(this.state.convoIds);
+    const { roomId } = this.state.convoIds;
+    console.log(roomId);
     const currentUser = this.props.user.id;
     if (this.state.renderOneConversation === false) {
-      return (
-        <View>
-          {/* <Text>Press to send message!</Text>
-          <Button
-            title="Message"
-            onPress={() =>
-              this.checkDataBaseForChatRoom(
-                currentUser,
-                "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"
-              )
-            }
-          /> */}
-        </View>
-      );
+      if (roomId) {
+        return (
+          <ScrollView>
+            {roomId.map((room) => {
+              return <Text key={room}>{room}</Text>;
+            })}
+          </ScrollView>
+        );
+      } else {
+        return <Text>LOADING</Text>;
+      }
     } else if (this.state.renderOneConversation === true) {
       return (
         <View>
@@ -124,3 +122,16 @@ export default class ChatMessengerScreen extends React.Component {
 }
 
 // export default ChatMessengerScreen;
+
+// <View>
+//   {/* <Text>Press to send message!</Text>
+//   <Button
+//     title="Message"
+//     onPress={() =>
+//       this.checkDataBaseForChatRoom(
+//         currentUser,
+//         "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"
+//       )
+//     }
+//   /> */}
+// </View>
