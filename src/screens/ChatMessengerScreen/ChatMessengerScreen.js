@@ -1,9 +1,10 @@
 import React from "react";
-import { Button, View, Text, ScrollView } from "react-native";
+import { Button, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { firebase } from "../../firebase/config";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { default as ConversationScreen } from "../ConversationScreen/ConversationScreen";
+import styles from "./styles";
 
 const Stack = createStackNavigator();
 
@@ -99,7 +100,14 @@ export default class ChatMessengerScreen extends React.Component {
         return (
           <ScrollView>
             {roomId.map((room) => {
-              return <Text key={room}>{room}</Text>;
+              return (
+                <View style={styles.roomLink} key={room}>
+                  <Text style={styles.chat_link_text}>{room}</Text>
+                  <TouchableOpacity style={styles.chat_button}>
+                    <Text>Enter Chat</Text>
+                  </TouchableOpacity>
+                </View>
+              );
             })}
           </ScrollView>
         );
