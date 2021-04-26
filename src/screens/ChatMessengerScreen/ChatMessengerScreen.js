@@ -10,6 +10,7 @@ const Stack = createStackNavigator();
 export default class ChatMessengerScreen extends React.Component {
   state = {
     renderOneConversation: false,
+    convoIds: [],
   };
 
   checkDataBaseForChatRoom = async (senderId, receiverId) => {
@@ -44,6 +45,19 @@ export default class ChatMessengerScreen extends React.Component {
     });
   };
 
+  componentDidMount() {
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(this.props.user.id)
+      .collection("active-conversations")
+      .doc("conversations")
+      .get()
+      .then((doc) => {
+        this.setState({ convoIds: doc.data() });
+      });
+  }
+
   startChat = (id) => {
     firebase
       .firestore()
@@ -77,11 +91,12 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
+    console.log(this.state.convoIds);
     const currentUser = this.props.user.id;
     if (this.state.renderOneConversation === false) {
       return (
         <View>
-          <Text>Press to send message!</Text>
+          {/* <Text>Press to send message!</Text>
           <Button
             title="Message"
             onPress={() =>
@@ -90,7 +105,7 @@ export default class ChatMessengerScreen extends React.Component {
                 "ivBQI1QUGDOZM6j9kpIs9Cwa6zy1"
               )
             }
-          />
+          /> */}
         </View>
       );
     } else if (this.state.renderOneConversation === true) {

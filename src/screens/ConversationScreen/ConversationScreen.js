@@ -2,6 +2,7 @@ import { Button, View, Text } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";
 import SingleMessage from "../ChatMessengerScreen/SingleMessage";
+import { GiftedChat } from "react-native-gifted-chat";
 
 export default class ConversationScreen extends React.Component {
   state = {
