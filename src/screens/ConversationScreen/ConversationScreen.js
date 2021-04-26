@@ -1,11 +1,11 @@
 import { Button, View, Text } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";
+import SingleMessage from "../ChatMessengerScreen/SingleMessage";
 
 export default class ConversationScreen extends React.Component {
   state = {
-    convo: {},
-    isLoading: true,
+    convo: [],
   };
 
   getMessagesFromChatroom = async (chatRoomId) => {
@@ -32,13 +32,18 @@ export default class ConversationScreen extends React.Component {
   }
 
   render() {
-    console.log(this.state.convo);
+    const { convo } = this.state;
     return (
       <View>
-        <Button
-          title="Go Dem Messages!"
-          onPress={() => this.getMessagesFromChatroom()}
-        />
+        {convo.map((convObj) => {
+          return (
+            <SingleMessage
+              sentBy={convObj.sentBy}
+              value={convObj.text}
+              key={convObj.id}
+            />
+          );
+        })}
       </View>
     );
   }
