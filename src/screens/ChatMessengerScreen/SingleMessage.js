@@ -6,7 +6,7 @@ function SingleMessage(props) {
   return (
     <View>
       <View style={styles.message}>
-        <Text>{props.senderName}</Text>
+        <Text>{props.sentBy}</Text>
         <Text>{props.value}</Text>
       </View>
     </View>

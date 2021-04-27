@@ -4,7 +4,7 @@ import { firebase } from "../../firebase/config";
 import { default as ConversationScreen } from "../ConversationScreen/ConversationScreen";
 import styles from "./styles";
 
-const receiverTestIdChangeWhenPossible = "GR9DItq1dphL7kXudFEypKqmUix1";
+const receiverTestIdChangeWhenPossible = "WhHlWCsnrIhUGEaKt2XQ8MfyrFi2";
 
 export default class ChatMessengerScreen extends React.Component {
   state = {
@@ -115,7 +115,7 @@ export default class ChatMessengerScreen extends React.Component {
     const currentUser = this.props.user.id;
     const currentUserName = this.props.user.fullName;
 
-    console.log(currentUserName);
+    //console.log(currentUserName);
 
     if (this.state.renderOneConversation === false) {
       if (roomzz) {
@@ -148,7 +148,7 @@ export default class ChatMessengerScreen extends React.Component {
     } else if (this.state.renderOneConversation === true) {
       return (
         <View>
-          <Text>Go back</Text>
+          {/* <Text>Go back</Text> */}
           <Button title="Go back!" onPress={() => this.goBack()} />
           <ConversationScreen
             sender={currentUser}

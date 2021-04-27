@@ -17,6 +17,7 @@ export default class ConversationScreen extends React.Component {
       .collection("chatRooms")
       .doc(this.props.roomId)
       .collection("Messages")
+      .orderBy("createdAt", "desc")
       .onSnapshot((querySnapshot) => {
         const conversation = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
@@ -58,6 +59,7 @@ export default class ConversationScreen extends React.Component {
       .add({
         sentBy: sender,
         text: message,
+        createdAt: new Date().getTime(),
       })
       .then((doc) => {
         firebase
@@ -70,24 +72,23 @@ export default class ConversationScreen extends React.Component {
             id: doc.id,
           });
       });
+    // this.setState({ senderMessage: "" });
   };
 
   onChange = (text) => {
-    console.log(text);
     return this.setState({ senderMessage: text });
   };
 
   render() {
-    const { convo } = this.state;
+    const { convo, senderMessage } = this.state;
+
     return (
       <View>
         {convo.map((convObj) => {
           return (
-            <SingleMessage
-              sentBy={convObj.senderName}
-              value={convObj.text}
-              key={convObj.id}
-            />
+            <View key={convObj.id || "no id found here"}>
+              <SingleMessage sentBy={convObj.sentBy} value={convObj.text} />
+            </View>
           );
         })}
         <TextInput
