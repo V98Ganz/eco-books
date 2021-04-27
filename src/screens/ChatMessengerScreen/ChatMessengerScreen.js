@@ -4,8 +4,7 @@ import { firebase } from "../../firebase/config";
 import { default as ConversationScreen } from "../ConversationScreen/ConversationScreen";
 import styles from "./styles";
 
-
-const receiverTestIdChangeWhenPossible = "GR9DItq1dphL7kXudFEypKqmUix1"
+const receiverTestIdChangeWhenPossible = "GR9DItq1dphL7kXudFEypKqmUix1";
 
 export default class ChatMessengerScreen extends React.Component {
   state = {
@@ -30,16 +29,16 @@ export default class ChatMessengerScreen extends React.Component {
       );
       isMatched.push(matchedIds);
     }
-    return isMatched
+    return isMatched;
   };
 
   queryCheck = async (senderId, receiverId, roomId) => {
     const result = await this.checkDataBaseForChatRoom(senderId, receiverId);
-    const isThereARoom = await result.find((item => item === true))
+    const isThereARoom = await result.find((item) => item === true);
     if (isThereARoom) {
       this.goToChat(roomId);
     } else {
-      this.startChat(senderId, receiverId)
+      this.startChat(senderId, receiverId);
     }
   };
 
@@ -57,11 +56,9 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.getCurrentConversations()
-      .then((conversations) => {
-
-        this.setState({ convoIds: conversations });
-      });
+    this.getCurrentConversations().then((conversations) => {      
+      this.setState({ convoIds: conversations });
+    });
   }
 
   getCurrentConversations = async () => {
@@ -70,16 +67,15 @@ export default class ChatMessengerScreen extends React.Component {
       .collection("users")
       .doc(this.props.user.id)
       .collection("active-conversations")
-      .get()
-      const conversation = {};
+      .get();
+    const conversation = {};
 
     snapshot.forEach((doc) => {
       conversation[doc.id] = doc.data();
     });
-    const chats = Object.values(conversation);
-    console.log(chats, '<<<<<<<')
-    return chats;
-  }
+
+    return conversation;
+  };
 
   startChat = (senderId, receiverId) => {
     firebase
@@ -114,24 +110,25 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
-    const to = this.state.convoIds;
-    console.log(to, '<<<< to ')
+    const roomzz = this.state.convoIds
+    const roomzzEntries = Object.entries(roomzz)
     const currentUser = this.props.user.id;
+    console.log(roomzzEntries)
     if (this.state.renderOneConversation === false) {
-      if (to) {
+      if (roomzz) {
         return (
           <ScrollView>
-            {to.map((room) => {
+            {roomzzEntries.map((array) => {
               return (
-                <View style={styles.roomLink} key={room.to}>
-                  <Text style={styles.chat_link_text}>{room.to}</Text>
+                <View style={styles.roomLink} key={array[0]}>
+                  <Text style={styles.chat_link_text}>{array[1].to}</Text>
                   <TouchableOpacity
                     style={styles.chat_button}
                     onPress={() =>
                       this.queryCheck(
                         currentUser,
                         receiverTestIdChangeWhenPossible,
-                        room.to
+                        array[0]
                       )
                     }
                   >
