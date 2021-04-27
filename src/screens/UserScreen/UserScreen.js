@@ -1,31 +1,15 @@
 import React, { Component } from "react";
-import { Image, Text, View } from "react-native";
+import { Text, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import { firebase } from "../../firebase/config";
 import AddBookFrom from "./AddBookForm";
+import MyBooksCarousel from "./MyBooksCarousel";
 
 export default class UserScreen extends Component {
   state = {
-    myBooks: [],
-    isLoading: true,
     showingMyBooks: false,
     showingEcobookInstructions: false,
     showingAddNewBook: false,
-  };
-
-  componentDidMount = () => {
-    firebase
-      .firestore()
-      .collection("users")
-      .doc(this.props.user.id)
-      .collection("books")
-      .get()
-      .then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          const bookData = doc.data();
-          return this.setState({ myBooks: [bookData], isLoading: false });
-        });
-      });
+    addedNewBook: false
   };
 
   viewMyBooks = () => {
@@ -61,10 +45,18 @@ export default class UserScreen extends Component {
     });
   };
 
+  updateAddedNewBook = () => {
+    this.setState((currentState) => {
+      if (currentState.addedNewBook) {
+        return { addedNewBook: false };
+        r;
+      } else {
+        return { addedNewBook: true };
+      }
+    });
+  }
+
   render() {
-    if (this.state.isLoading) {
-      return <></>;
-    }
     return (
       <View>
       <KeyboardAwareScrollView>
@@ -82,14 +74,11 @@ export default class UserScreen extends Component {
         ) : null}
         <Text onPress={this.viewMyBooks}>Your Books</Text>
         {this.state.showingMyBooks ? (
-          <Image
-            source={{ uri: this.state.myBooks[0].bookImage }}
-            style={{ width: 200, height: 200 }}
-          />
+          <MyBooksCarousel user={this.props.user} addedBook={this.state.addedNewBook}/>
         ) : null}
         <Text onPress={this.viewAddNewBooks}>Add a new Book!</Text>
         {this.state.showingAddNewBook ? (
-          <AddBookFrom user={this.props.user} />
+          <AddBookFrom user={this.props.user} updateAddedNewBook={this.updateAddedNewBook}/>
         ) : null}
       </KeyboardAwareScrollView>
       </View>

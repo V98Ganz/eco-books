@@ -40,6 +40,11 @@ export default function AddBookFrom(props) {
       })
       .then(() => {
         alert("Your book has been added");
+        props.updateAddedNewBook()
+        setBookTitle("")
+        setBookAuthor("")
+        setBookValue("")
+        setBookLocation("")
       })
     
       .catch((error) => {
