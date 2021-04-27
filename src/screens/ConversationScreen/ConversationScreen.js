@@ -1,4 +1,12 @@
-import { Button, View, Text, TextInput } from "react-native";
+import {
+  Button,
+  View,
+  Text,
+  TextInput,
+  Alert,
+  ScrollView,
+  SafeAreaView,
+} from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";
 import SingleMessage from "../ChatMessengerScreen/SingleMessage";
@@ -50,29 +58,32 @@ export default class ConversationScreen extends React.Component {
     const sender = this.props.senderName;
     const message = this.state.senderMessage;
     const roomId = this.props.roomId;
-
-    firebase
-      .firestore()
-      .collection("chatRooms")
-      .doc(roomId)
-      .collection("Messages")
-      .add({
-        sentBy: sender,
-        text: message,
-        createdAt: new Date().getTime(),
-      })
-      .then((doc) => {
-        firebase
-          .firestore()
-          .collection("chatRooms")
-          .doc(roomId)
-          .collection("Messages")
-          .doc(doc.id)
-          .update({
-            id: doc.id,
-          });
-      });
-    this.clearSentMessage();
+    if (message) {
+      firebase
+        .firestore()
+        .collection("chatRooms")
+        .doc(roomId)
+        .collection("Messages")
+        .add({
+          sentBy: sender,
+          text: message,
+          createdAt: new Date().getTime(),
+        })
+        .then((doc) => {
+          firebase
+            .firestore()
+            .collection("chatRooms")
+            .doc(roomId)
+            .collection("Messages")
+            .doc(doc.id)
+            .update({
+              id: doc.id,
+            });
+        });
+      this.clearSentMessage();
+    } else {
+      Alert.alert("Can not send empty messages!");
+    }
   };
 
   clearSentMessage = () => {
@@ -87,24 +98,28 @@ export default class ConversationScreen extends React.Component {
     const { convo, senderMessage } = this.state;
     // console.log(senderMessage);
     return (
-      <View>
-        {convo.map((convObj) => {
-          return (
-            <View key={convObj.id || "no id found here"}>
-              <SingleMessage sentBy={convObj.sentBy} value={convObj.text} />
-            </View>
-          );
-        })}
-        <TextInput
-          style={styles.text_input}
-          placeholder="Type your message..."
-          placeholderTextColor="#3f3f3f"
-          onChangeText={this.onChange}
-          clearButtonMode="always"
-          value={this.state.senderMessage}
-        ></TextInput>
-        <Button title="Send" onPress={() => this.sendMessage()}></Button>
-      </View>
+      <ScrollView>
+        <View style={{ paddingBottom: 50 }}>
+          {convo.map((convObj) => {
+            return (
+              <View key={convObj.id || "no id found here"}>
+                <SingleMessage sentBy={convObj.sentBy} value={convObj.text} />
+              </View>
+            );
+          })}
+          <View style={styles.send_message}>
+            <TextInput
+              style={styles.text_input}
+              placeholder="Type your message..."
+              placeholderTextColor="#3f3f3f"
+              onChangeText={this.onChange}
+              clearButtonMode="always"
+              value={this.state.senderMessage}
+            ></TextInput>
+            <Button title="Send" onPress={() => this.sendMessage()}></Button>
+          </View>
+        </View>
+      </ScrollView>
     );
   }
 }

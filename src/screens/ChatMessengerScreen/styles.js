@@ -27,8 +27,12 @@ export default StyleSheet.create({
     height: 40,
     backgroundColor: "#f7f7f7",
     color: "#3f3f3f",
-    width: "90%",
+    width: "80%",
     borderRadius: 50,
     padding: 10,
+  },
+
+  send_message: {
+    flexDirection: "row",
   },
 });
