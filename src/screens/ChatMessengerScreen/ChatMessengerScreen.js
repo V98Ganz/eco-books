@@ -1,17 +1,16 @@
 import React from "react";
 import { Button, View, Text, ScrollView, TouchableOpacity } from "react-native";
 import { firebase } from "../../firebase/config";
-import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 import { default as ConversationScreen } from "../ConversationScreen/ConversationScreen";
 import styles from "./styles";
 
-const Stack = createStackNavigator();
+
+const receiverTestIdChangeWhenPossible = "GR9DItq1dphL7kXudFEypKqmUix1"
 
 export default class ChatMessengerScreen extends React.Component {
   state = {
     renderOneConversation: false,
-    convoIds: {},
+    convoIds: [],
     roomId: null,
   };
 
@@ -40,7 +39,7 @@ export default class ChatMessengerScreen extends React.Component {
     if (isThereARoom) {
       this.goToChat(roomId);
     } else {
-      this.startChat(senderId)
+      this.startChat(senderId, receiverId)
     }
   };
 
@@ -58,24 +57,36 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   componentDidMount() {
-    firebase
+    this.getCurrentConversations()
+      .then((conversations) => {
+
+        this.setState({ convoIds: conversations });
+      });
+  }
+
+  getCurrentConversations = async () => {
+    const snapshot = await firebase
       .firestore()
       .collection("users")
       .doc(this.props.user.id)
       .collection("active-conversations")
-      .doc("conversations")
       .get()
-      .then((doc) => {
-        this.setState({ convoIds: doc.data() });
-      });
+      const conversation = {};
+
+    snapshot.forEach((doc) => {
+      conversation[doc.id] = doc.data();
+    });
+    const chats = Object.values(conversation);
+    console.log(chats, '<<<<<<<')
+    return chats;
   }
 
-  startChat = (id) => {
+  startChat = (senderId, receiverId) => {
     firebase
       .firestore()
       .collection("chatRooms")
       .add({
-        users: [id, "GR9DItq1dphL7kXudFEypKqmUix1"],
+        users: [senderId, receiverId],
       })
       .then((doc) => {
         firebase
@@ -83,16 +94,16 @@ export default class ChatMessengerScreen extends React.Component {
           .collection("users")
           .doc(id)
           .collection("active-conversations")
-          .doc("conversations")
+          .doc(doc.id)
           .update({
             roomId: firebase.firestore.FieldValue.arrayUnion(doc.id),
           });
         firebase
           .firestore()
           .collection("users")
-          .doc("GR9DItq1dphL7kXudFEypKqmUix1")
+          .doc(receiverId)
           .collection("active-conversations")
-          .doc("conversations")
+          .doc(doc.id)
           .update({
             roomId: firebase.firestore.FieldValue.arrayUnion(doc.id),
           });
@@ -103,23 +114,24 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
-    const { roomId } = this.state.convoIds;
+    const to = this.state.convoIds;
+    console.log(to, '<<<< to ')
     const currentUser = this.props.user.id;
     if (this.state.renderOneConversation === false) {
-      if (roomId) {
+      if (to) {
         return (
           <ScrollView>
-            {roomId.map((room) => {
+            {to.map((room) => {
               return (
-                <View style={styles.roomLink} key={room}>
-                  <Text style={styles.chat_link_text}>{room}</Text>
+                <View style={styles.roomLink} key={room.to}>
+                  <Text style={styles.chat_link_text}>{room.to}</Text>
                   <TouchableOpacity
                     style={styles.chat_button}
                     onPress={() =>
                       this.queryCheck(
                         currentUser,
-                        "GR9DItq1dphL7kXudFEypKqmUix1",
-                        room
+                        receiverTestIdChangeWhenPossible,
+                        room.to
                       )
                     }
                   >
@@ -140,7 +152,7 @@ export default class ChatMessengerScreen extends React.Component {
           <Button title="Go back!" onPress={() => this.goBack()} />
           <ConversationScreen
             sender={currentUser}
-            receiver={"GR9DItq1dphL7kXudFEypKqmUix1"}
+            receiver={receiverTestIdChangeWhenPossible}
             roomId={this.state.roomId}
           />
         </View>
