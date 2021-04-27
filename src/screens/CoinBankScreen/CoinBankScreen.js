@@ -1,12 +1,6 @@
 import { Pedometer } from "expo-sensors";
 import React from "react";
-import {
-  Alert, Button, StyleSheet,
-
-
-
-  Text, View
-} from "react-native";
+import { Alert, Button, StyleSheet, Text, View } from "react-native";
 import { firebase } from "../../firebase/config";
 
 const Separator = () => <View style={styles.separator} />;
@@ -16,23 +10,18 @@ export default class PedometerScreen extends React.Component {
     isPedometerAvailable: "checking",
     pastStepCount: 0,
     currentStepCount: 0,
-    pastCoins: {
-      coins: 0,
-    },
-    userObject: {}
+    userObject: {},
   };
 
   componentDidMount() {
     firebase
       .firestore()
-      .collection('users')
+      .collection("users")
       .doc(this.props.user.id)
       .get()
       .then((doc) => {
-        if (doc.exists) {
-          this.setState({ userObject: doc.data() })
-        }
-      })
+        this.setState({ userObject: doc.data() });
+      });
   }
 
   startWorkout() {
@@ -43,25 +32,23 @@ export default class PedometerScreen extends React.Component {
   sendToFirestore() {
     Alert.alert("Workout Stopped");
     this._unsubscribe();
-    
-    const coins = stepsToCoins(this.state.currentStepCount) + this.state.userObject.coins
+
+    const coins =
+      stepsToCoins(this.state.currentStepCount) + this.state.userObject.coins;
     const newUserObject = this.state.userObject;
-    newUserObject.coins = coins
-    this.setState({ userObject: newUserObject})
+    newUserObject.coins = coins;
 
     firebase
       .firestore()
       .collection("users")
       .doc(this.props.user.id)
-      .set(
-        this.state.userObject
-      )
+      .set(newUserObject)
       .then(() => {
         this.setState({
           currentStepCount: 0,
-          userObject: newUserObject
-        })
-      })
+          userObject: newUserObject,
+        });
+      });
   }
   _subscribe = () => {
     this._subscription = Pedometer.watchStepCount((result) => {
@@ -109,8 +96,8 @@ export default class PedometerScreen extends React.Component {
       <View style={styles.container}>
         <View>
           <Text style={styles.title}>Your Coins</Text>
-          <Text>{this.state.pastCoins.coins}</Text>
-          </View>
+          <Text>{this.state.userObject.coins}</Text>
+        </View>
         <View>
           <Text style={styles.title}>Press to start step count</Text>
           <Button title="Start" onPress={() => this.startWorkout()} />
@@ -130,8 +117,8 @@ export default class PedometerScreen extends React.Component {
 }
 
 const stepsToCoins = (steps) => {
-  return steps / 100
-}
+  return steps / 100;
+};
 
 const styles = StyleSheet.create({
   container: {
