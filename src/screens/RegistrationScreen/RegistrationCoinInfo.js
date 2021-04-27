@@ -6,7 +6,7 @@ export default class RegistrationCoinInfo extends Component {
   state = {
     myBooks: [],
     isLoading: true,
-    bookId: ""
+    bookId: "",
   };
 
   componentDidMount = () => {
@@ -20,7 +20,11 @@ export default class RegistrationCoinInfo extends Component {
         querySnapshot.forEach((doc) => {
           const bookData = doc.data();
           const bookId = doc.id;
-          return this.setState({ myBooks: bookData, isLoading: false, bookId: bookId });
+          return this.setState({
+            myBooks: bookData,
+            isLoading: false,
+            bookId: bookId,
+          });
         });
       });
   };
@@ -28,18 +32,18 @@ export default class RegistrationCoinInfo extends Component {
   handleBookCoin = (text) => {
     if (text > 0 && text < 6) {
       const book = this.state.myBooks;
-      book.bookValue = text
+      book.bookValue = text * 1;
       firebase
-      .firestore()
-      .collection("users")
-      .doc(this.props.route.params.userData.id)
-      .collection("books")
-      .doc(this.state.bookId)
-      .set(book)
+        .firestore()
+        .collection("users")
+        .doc(this.props.route.params.userData.id)
+        .collection("books")
+        .doc(this.state.bookId)
+        .set(book);
     } else {
-      alert("This is an invalid BookCoin value, please re-enter!")
+      alert("This is an invalid BookCoin value, please re-enter!");
     }
-  }
+  };
 
   nextPage = () => {
     this.props.navigation.navigate("EcoBooks", {
@@ -48,18 +52,23 @@ export default class RegistrationCoinInfo extends Component {
   };
 
   render() {
-    console.log(this.state.bookValue)
     if (this.state.isLoading) {
       return <></>;
     }
-    
+
     return (
       <View>
         <Text>Welcome to EcoBooks!</Text>
         <Text>
-          EcoBooks is a book trading app where we encourage you to read, walk and recycle! Each book in our BookShop is worth BookCoins, which you can earn by walking. 
+          EcoBooks is a book trading app where we encourage you to read, walk
+          and recycle! Each book in our BookShop is worth BookCoins, which you
+          can earn by walking.
         </Text>
-        <Text>You have added {this.state.myBooks.bookTitle} for sale, please add how many BookCoins you would like to sell your book for. Book value must be between 1 to 5 BookCoins.</Text>
+        <Text>
+          You have added {this.state.myBooks.bookTitle} for sale, please add how
+          many BookCoins you would like to sell your book for. Book value must
+          be between 1 to 5 BookCoins.
+        </Text>
         <Image
           source={{ uri: this.state.myBooks.bookImage }}
           style={{ width: 295, height: 450, resizeMode: "contain" }}
