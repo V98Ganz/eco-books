@@ -3,6 +3,7 @@ import React from "react";
 import { default as BookShop } from "../BookShop/BookShop";
 import { default as CoinBankScreen } from "../CoinBankScreen/CoinBankScreen";
 import { default as UserScreen } from "../UserScreen/UserScreen";
+import { default as ChatMessengerScreen } from "../ChatMessengerScreen/ChatMessengerScreen";
 
 const Tab = createBottomTabNavigator();
 
