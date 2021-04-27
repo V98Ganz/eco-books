@@ -11,7 +11,7 @@ export default class ConversationScreen extends React.Component {
     senderMessage: "",
   };
 
-  getMessagesFromChatroom = async () => {
+  getMessagesFromChatroom = async (cb) => {
     const snapshot = await firebase
       .firestore()
       .collection("chatRooms")
@@ -29,18 +29,20 @@ export default class ConversationScreen extends React.Component {
         //   conversation[doc.id] = doc.data();
         // });
         // const chats = Object.values(conversation);
-        // return chats;
-        return conversation;
+        cb(conversation);
       });
     // console.log(typeof snapshot);
     return snapshot;
   };
 
   componentDidMount() {
-    this.getMessagesFromChatroom().then((messages) => {
-      console.log(messages());
+    this.getMessagesFromChatroom((messages) => {
       this.setState({ convo: messages });
     });
+    // .then((messages) => {
+    //   console.log(messages());
+    //   this.setState({ convo: messages });
+    // });
   }
 
   sendMessage = () => {
