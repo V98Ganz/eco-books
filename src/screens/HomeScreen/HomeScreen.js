@@ -16,13 +16,12 @@ export default function HomeScreen(props) {
   }
 
   return (
-    <Tab.Navigator>
+    <Tab.Navigator initialRouteName={"BookShop"}>
+      <Tab.Screen name="UserProfile">
+        {(props) => <UserScreen {...props} user={userObject} />}
+      </Tab.Screen>
       <Tab.Screen name="BookShop">
         {(props) => <BookShop {...props} user={userObject} />}
-      </Tab.Screen>
-      <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
-      <Tab.Screen name="Messages">
-        {(props) => <ChatMessengerScreen {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="CoinBank">
         {(props) => <CoinBankScreen {...props} user={userObject} />}

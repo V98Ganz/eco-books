@@ -4,7 +4,12 @@ import { decode, encode } from "base-64";
 import React, { useEffect, useState } from "react";
 import "react-native-gesture-handler";
 import { firebase } from "./src/firebase/config";
-import { HomeScreen, LoginScreen, RegistrationScreen } from "./src/screens";
+import {
+  HomeScreen,
+  LoginScreen,
+  RegistrationScreen,
+  RegistrationCoinInfo,
+} from "./src/screens";
 
 if (!global.btoa) {
   global.btoa = encode;
@@ -53,6 +58,9 @@ export default function App() {
         </Stack.Screen>
         <Stack.Screen name="Login" component={LoginScreen} />
         <Stack.Screen name="Registration" component={RegistrationScreen} />
+        <Stack.Screen name="RegistrationCoinInfo">
+          {(props) => <RegistrationCoinInfo {...props} />}
+        </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>
   );
