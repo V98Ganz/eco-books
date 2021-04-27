@@ -42,6 +42,7 @@ export default class BookCardInfo extends Component {
               <Text style={styles.bookcoins}>Book costs {this.props.bookValue} BookCoins</Text>
               <Text style={styles.description}>{this.props.bookDescription}</Text>
               <Text style={styles.condition}>Book Condition: {this.props.bookCondition}</Text>
+              <Text style={styles.location}>Book pickup location: {this.props.bookLocation}</Text>
               <Text style={styles.message}>Send seller a message!</Text>
             </TouchableOpacity>
           </ScrollView>
@@ -82,6 +83,9 @@ const styles = StyleSheet.create({
   },
   bookcoins: {
     fontWeight: "bold",
+    textAlign: "center"
+  },
+  location: {
     textAlign: "center"
   }
 });

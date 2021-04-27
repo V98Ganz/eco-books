@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import { Text, View, Image } from "react-native";
+import { Image, Text, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../../firebase/config";
 import AddBookFrom from "./AddBookForm";
 
@@ -66,6 +67,7 @@ export default class UserScreen extends Component {
     }
     return (
       <View>
+      <KeyboardAwareScrollView>
         <Text>Welcome back {this.props.user.fullName}!</Text>
         <Text onPress={this.viewEcobookInstructions}>
           How does EcoBooks work?
@@ -89,7 +91,9 @@ export default class UserScreen extends Component {
         {this.state.showingAddNewBook ? (
           <AddBookFrom user={this.props.user} />
         ) : null}
+      </KeyboardAwareScrollView>
       </View>
+      
     );
   }
 }

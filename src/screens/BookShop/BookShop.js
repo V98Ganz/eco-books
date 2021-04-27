@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Dimensions, StyleSheet, View } from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { firebase } from "../../firebase/config";
-// import styles from "../LoginScreen/styles";
 import BookCardInfo from "./BookCardInfo";
 
 export default class BookShop extends Component {
@@ -20,6 +19,7 @@ export default class BookShop extends Component {
           bookDescription={item.bookDescription}
           bookValue={item.bookValue}
           bookCondition={item.bookCondition}
+          bookLocation={item.bookLocation}
           bookOwnerId={item.userId}
           user={this.props.user}
         />

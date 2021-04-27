@@ -11,6 +11,7 @@ export default function AddBookFrom(props) {
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookCondition, setBookCondition] = useState("Brand new");
   const [bookValue, setBookValue] = useState("");
+  const [bookLocation, setBookLocation] = useState("");
   
   
   const onAddBook = () => {
@@ -26,6 +27,7 @@ export default function AddBookFrom(props) {
           bookImage: bookInfo.imageLinks.thumbnail || "no images found",
           bookCondition: bookCondition,
           bookValue: bookValue,
+          bookLocation: bookLocation,
         };
         firebase
           .firestore()
@@ -78,6 +80,15 @@ export default function AddBookFrom(props) {
         placeholder="Input book value"
         onChangeText={(text) => setBookValue(text)}
         value={bookValue}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.input}
+        placeholderTextColor="#aaaaaa"
+        placeholder="Input book pickup location"
+        onChangeText={(text) => setBookLocation(text)}
+        value={bookLocation}
         underlineColorAndroid="transparent"
         autoCapitalize="none"
       />
