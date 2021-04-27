@@ -23,6 +23,10 @@ export default function HomeScreen(props) {
       <Tab.Screen name="BookShop">
         {(props) => <BookShop {...props} user={userObject} />}
       </Tab.Screen>
+      <Tab.Screen name="UserProfile" component={UserScreen}></Tab.Screen>
+      <Tab.Screen name="Messages">
+        {(props) => <ChatMessengerScreen {...props} user={userObject} />}
+      </Tab.Screen>
       <Tab.Screen name="CoinBank">
         {(props) => <CoinBankScreen {...props} user={userObject} />}
       </Tab.Screen>
