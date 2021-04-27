@@ -17,7 +17,7 @@ export default class ConversationScreen extends React.Component {
       .collection("chatRooms")
       .doc(this.props.roomId)
       .collection("Messages")
-      .orderBy("createdAt", "desc")
+      .orderBy("createdAt", "asc")
       .onSnapshot((querySnapshot) => {
         const conversation = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
@@ -72,7 +72,11 @@ export default class ConversationScreen extends React.Component {
             id: doc.id,
           });
       });
-    // this.setState({ senderMessage: "" });
+    this.clearSentMessage();
+  };
+
+  clearSentMessage = () => {
+    return this.setState({ senderMessage: "" });
   };
 
   onChange = (text) => {
@@ -81,7 +85,7 @@ export default class ConversationScreen extends React.Component {
 
   render() {
     const { convo, senderMessage } = this.state;
-
+    // console.log(senderMessage);
     return (
       <View>
         {convo.map((convObj) => {
@@ -97,6 +101,7 @@ export default class ConversationScreen extends React.Component {
           placeholderTextColor="#3f3f3f"
           onChangeText={this.onChange}
           clearButtonMode="always"
+          value={this.state.senderMessage}
         ></TextInput>
         <Button title="Send" onPress={() => this.sendMessage()}></Button>
       </View>
