@@ -56,7 +56,7 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.getCurrentConversations().then((conversations) => {      
+    this.getCurrentConversations().then((conversations) => {
       this.setState({ convoIds: conversations });
     });
   }
@@ -110,10 +110,13 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   render() {
-    const roomzz = this.state.convoIds
-    const roomzzEntries = Object.entries(roomzz)
+    const roomzz = this.state.convoIds;
+    const roomzzEntries = Object.entries(roomzz);
     const currentUser = this.props.user.id;
-    console.log(roomzzEntries)
+    const currentUserName = this.props.user.fullName;
+
+    console.log(currentUserName);
+
     if (this.state.renderOneConversation === false) {
       if (roomzz) {
         return (
@@ -151,6 +154,7 @@ export default class ChatMessengerScreen extends React.Component {
             sender={currentUser}
             receiver={receiverTestIdChangeWhenPossible}
             roomId={this.state.roomId}
+            senderName={currentUserName}
           />
         </View>
       );

@@ -21,4 +21,14 @@ export default StyleSheet.create({
   chat_link_text: {
     color: "#FFFFFF",
   },
+
+  // conversation screen styling
+  text_input: {
+    height: 40,
+    backgroundColor: "#f7f7f7",
+    color: "#3f3f3f",
+    width: "90%",
+    borderRadius: 50,
+    padding: 10,
+  },
 });
