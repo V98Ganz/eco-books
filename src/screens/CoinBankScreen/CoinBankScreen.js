@@ -91,7 +91,6 @@ export default class PedometerScreen extends React.Component {
   };
 
   render() {
-    console.log(this.state);
     return (
       <View style={styles.container}>
         <View>
