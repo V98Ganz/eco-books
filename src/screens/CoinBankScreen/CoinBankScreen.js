@@ -1,13 +1,12 @@
+import { Pedometer } from "expo-sensors";
 import React from "react";
 import {
-  StyleSheet,
-  Button,
-  View,
-  SafeAreaView,
-  Text,
-  Alert,
+  Alert, Button, StyleSheet,
+
+
+
+  Text, View
 } from "react-native";
-import { Pedometer } from "expo-sensors";
 import { firebase } from "../../firebase/config";
 
 const Separator = () => <View style={styles.separator} />;
@@ -20,6 +19,7 @@ export default class PedometerScreen extends React.Component {
     pastCoins: {
       coins: 0,
     },
+    userObject: {}
   };
 
   componentDidMount() {
@@ -27,12 +27,10 @@ export default class PedometerScreen extends React.Component {
       .firestore()
       .collection('users')
       .doc(this.props.user.id)
-      .collection('coins')
-      .doc('coins')
       .get()
       .then((doc) => {
         if (doc.exists) {
-          this.setState({ pastCoins: doc.data() })
+          this.setState({ userObject: doc.data() })
         }
       })
   }
@@ -46,23 +44,22 @@ export default class PedometerScreen extends React.Component {
     Alert.alert("Workout Stopped");
     this._unsubscribe();
     
-    const coins = stepsToCoins(this.state.currentStepCount) + this.state.pastCoins.coins
+    const coins = stepsToCoins(this.state.currentStepCount) + this.state.userObject.coins
+    const newUserObject = this.state.userObject;
+    newUserObject.coins = coins
+    this.setState({ userObject: newUserObject})
 
     firebase
       .firestore()
       .collection("users")
       .doc(this.props.user.id)
-      .collection("coins")
-      .doc("coins")
-      .set({
-        coins: coins,
-      })
+      .set(
+        this.state.userObject
+      )
       .then(() => {
         this.setState({
           currentStepCount: 0,
-          pastCoins: {
-            coins: coins
-          }
+          userObject: newUserObject
         })
       })
   }
