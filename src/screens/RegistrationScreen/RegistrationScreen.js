@@ -1,3 +1,4 @@
+import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
@@ -12,9 +13,8 @@ export default function RegistrationScreen({ navigation }) {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
-  // const [bookDescription, setBookDescription] = useState("");
-  // const [bookImage, setBookImage] = useState("");
-  // const [isValid, setIsValid] = useState(true);
+  const [bookCondition, setBookCondition] = useState("Brand new");
+  const [bookLocation, setBookLocation] = useState("");
 
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
@@ -38,6 +38,7 @@ export default function RegistrationScreen({ navigation }) {
           id: uid,
           email,
           fullName,
+          coins: 0,
         };
 
         const booksData = {
@@ -45,6 +46,8 @@ export default function RegistrationScreen({ navigation }) {
           bookAuthor: bookInfo.authors[0] || "no author found",
           bookDescription: bookInfo.description || "no description found",
           bookImage: bookInfo.imageLinks.thumbnail || "no images found",
+          bookCondition: bookCondition,
+          bookLocation: bookLocation,
         };
 
         const usersRef = firebase.firestore().collection("users");
@@ -59,7 +62,7 @@ export default function RegistrationScreen({ navigation }) {
         ]);
       })
       .then(([userData]) => {
-        navigation.navigate("EcoBooks", { userData });
+        navigation.navigate("RegistrationCoinInfo", { userData });
       })
       .catch((error) => {
         alert(error);
@@ -134,6 +137,31 @@ export default function RegistrationScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
+        <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Input book pickup postcode"
+          onChangeText={(text) => setBookLocation(text)}
+          value={bookLocation}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+        <Picker
+          selectedValue={bookCondition}
+          onValueChange={(currentCondition) =>
+            setBookCondition(currentCondition)
+          }
+        >
+          <Picker.Item label="Brand new" value="Brand new" />
+          <Picker.Item
+            label="Used with slight wear"
+            value="Used with slight wear"
+          />
+          <Picker.Item
+            label="Fair wear and tear, all pages present"
+            value="Fair wear and tear, all pages present"
+          />
+        </Picker>
 
         <TouchableOpacity
           style={styles.button}
@@ -153,38 +181,3 @@ export default function RegistrationScreen({ navigation }) {
     </View>
   );
 }
-
-// firebase
-//       .auth()
-//       .createUserWithEmailAndPassword(email, password)
-//       .then((response) => {
-//         const uid = response.user.uid;
-//         const userData = {
-//           id: uid,
-//           email,
-//           fullName,
-//         };
-
-//         return Promise.all([fetchBooks(bookTitle, bookAuthor), userData]);
-//       })
-//       .then(([{ title, authors, description, imageLinks }, userData]) => {
-//         const booksData = {
-//           bookTitle: title || "no title found",
-//           bookAuthor: authors[0] || "no author found",
-//           bookDescription: description || "no description found",
-//           bookImage: imageLinks.thumbnail || "no images found",
-//         };
-
-//         const usersRef = firebase.firestore().collection("users");
-//         return Promise.all([
-//           userData,
-//           usersRef.doc(userData.id).set(userData),
-//           usersRef.doc(userData.id).collection("books").doc(bookTitle).set(booksData),
-//         ]);
-//       })
-//       .then(([userData]) => {
-//         navigation.navigate("Home", { userData });
-//       })
-//       .catch((error) => {
-//         alert(error);
-//       });
