@@ -39,8 +39,9 @@ export default class BookCardInfo extends Component {
             <TouchableOpacity onPress={this.changeView}>
               <Text style={styles.title}>{this.props.bookTitle}</Text>
               <Text style={styles.author}>by {this.props.bookAuthor}</Text>
+              <Text style={styles.bookcoins}>Book costs {this.props.bookValue} BookCoins</Text>
               <Text style={styles.description}>{this.props.bookDescription}</Text>
-              <Text stlye={styles.condition}>Book Condition: {this.props.bookCondition}</Text>
+              <Text style={styles.condition}>Book Condition: {this.props.bookCondition}</Text>
               <Text style={styles.message}>Send seller a message!</Text>
             </TouchableOpacity>
           </ScrollView>
@@ -71,11 +72,16 @@ const styles = StyleSheet.create({
   },
   condition: {
     fontWeight: "bold",
+    textAlign: "center",
     margin: 12
   },
   message: {
     fontWeight: "bold",
     textAlign: "center",
     marginTop: 10
+  },
+  bookcoins: {
+    fontWeight: "bold",
+    textAlign: "center"
   }
 });

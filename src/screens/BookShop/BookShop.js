@@ -18,6 +18,7 @@ export default class BookShop extends Component {
           bookImage={item.bookImage}
           bookTitle={item.bookTitle}
           bookDescription={item.bookDescription}
+          bookValue={item.bookValue}
           bookCondition={item.bookCondition}
           bookOwnerId={item.userId}
           user={this.props.user}

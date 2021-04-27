@@ -1,17 +1,22 @@
-import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
-import React, { useState } from "react";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-import styles from "../RegistrationScreen/styles";
-import { firebase } from "../../firebase/config";
 import { Picker } from "@react-native-picker/picker";
+import React, { useState } from "react";
+import { Text, TextInput, TouchableOpacity, View } from "react-native";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { firebase } from "../../firebase/config";
 import { fetchBooks } from "../../utils/utils";
+import styles from "../RegistrationScreen/styles";
 
 export default function AddBookFrom(props) {
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookCondition, setBookCondition] = useState("Brand new");
-
+  const [bookValue, setBookValue] = useState("");
+  
+  
   const onAddBook = () => {
+    
+    if (bookValue > 0 && bookValue < 6) {
+  
     fetchBooks(bookTitle, bookAuthor)
       .then((bookInfo) => {
         const booksData = {
@@ -20,6 +25,7 @@ export default function AddBookFrom(props) {
           bookDescription: bookInfo.description || "no description found",
           bookImage: bookInfo.imageLinks.thumbnail || "no images found",
           bookCondition: bookCondition,
+          bookValue: bookValue,
         };
         firebase
           .firestore()
@@ -33,10 +39,13 @@ export default function AddBookFrom(props) {
       .then(() => {
         alert("Your book has been added");
       })
-
+    
       .catch((error) => {
         alert(error);
       });
+    } else {
+      alert("This is an invalid BookCoin value, please re-enter!")
+    }
   };
 
   return (
@@ -60,6 +69,15 @@ export default function AddBookFrom(props) {
         placeholder="Input book Author"
         onChangeText={(text) => setBookAuthor(text)}
         value={bookAuthor}
+        underlineColorAndroid="transparent"
+        autoCapitalize="none"
+      />
+       <TextInput
+        style={styles.input}
+        placeholderTextColor="#aaaaaa"
+        placeholder="Input book value"
+        onChangeText={(text) => setBookValue(text)}
+        value={bookValue}
         underlineColorAndroid="transparent"
         autoCapitalize="none"
       />
