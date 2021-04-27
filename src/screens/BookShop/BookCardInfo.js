@@ -51,7 +51,7 @@ export default class BookCardInfo extends Component {
               <Text style={styles.location}>
                 Book pickup location: {this.props.bookLocation}
               </Text>
-              <Text style={styles.message}>Send seller a message!</Text>
+              <Text style={styles.message}>Send seller message</Text>
               <BuyBooks
                 bookCost={this.props.bookValue}
                 user={this.props.user}

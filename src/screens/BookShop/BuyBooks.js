@@ -23,7 +23,10 @@ export default class BuyBooks extends Component {
           );
         } else {
           const buyerUserObject = this.state.userObject;
-          buyerUserObject.coins = buyerUserObject.coins - this.props.bookCost;
+
+          buyerUserObject.coins =
+            Number(buyerUserObject.coins) - Number(this.props.bookCost);
+
           usersRef
             .doc(this.props.user.id)
             .set(buyerUserObject)
@@ -33,8 +36,10 @@ export default class BuyBooks extends Component {
                 .get()
                 .then((doc) => {
                   const bookOwnerObject = doc.data();
+
                   bookOwnerObject.coins =
-                    bookOwnerObject.coins + this.props.bookCost;
+                    Number(bookOwnerObject.coins) + Number(this.props.bookCost);
+
                   this.setState({ bookOwnerObject: bookOwnerObject });
                 })
                 .then(() => {
