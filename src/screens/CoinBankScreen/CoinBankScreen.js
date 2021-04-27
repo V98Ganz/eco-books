@@ -117,7 +117,7 @@ export default class PedometerScreen extends React.Component {
 }
 
 const stepsToCoins = (steps) => {
-  return steps / 100;
+  return steps / 10;
 };
 
 const styles = StyleSheet.create({

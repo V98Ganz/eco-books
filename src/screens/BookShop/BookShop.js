@@ -22,6 +22,7 @@ export default class BookShop extends Component {
           bookLocation={item.bookLocation}
           bookOwnerId={item.userId}
           user={this.props.user}
+          bookId={item.bookId}
         />
       </View>
     );
@@ -46,6 +47,7 @@ export default class BookShop extends Component {
               querySnapshot.forEach((doc) => {
                 const bookData = doc.data();
                 bookData.userId = userId;
+                bookData.bookId = doc.id;
                 usersBooks.push(bookData);
               });
               this.setState((currentState) => {
