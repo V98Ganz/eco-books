@@ -5,8 +5,8 @@ import { firebase } from "../../firebase/config";
 export default class RegistrationCoinInfo extends Component {
   state = {
     myBooks: [],
-    bookValue: 0,
-    isLoading: true
+    isLoading: true,
+    bookId: ""
   };
 
   componentDidMount = () => {
@@ -19,13 +19,26 @@ export default class RegistrationCoinInfo extends Component {
       .then((querySnapshot) => {
         querySnapshot.forEach((doc) => {
           const bookData = doc.data();
-          return this.setState({ myBooks: bookData, isLoading: false });
+          const bookId = doc.id;
+          return this.setState({ myBooks: bookData, isLoading: false, bookId: bookId });
         });
       });
   };
 
   handleBookCoin = (text) => {
-    this.setState({bookValue: text})
+    if (text > 0 && text < 6) {
+      const book = this.state.myBooks;
+      book.bookValue = text
+      firebase
+      .firestore()
+      .collection("users")
+      .doc(this.props.route.params.userData.id)
+      .collection("books")
+      .doc(this.state.bookId)
+      .set(book)
+    } else {
+      alert("This is an invalid BookCoin value, please re-enter!")
+    }
   }
 
   nextPage = () => {
@@ -44,9 +57,9 @@ export default class RegistrationCoinInfo extends Component {
       <View>
         <Text>Welcome to EcoBooks!</Text>
         <Text>
-          Here is how everything works...
+          EcoBooks is a book trading app where we encourage you to read, walk and recycle! Each book in our BookShop is worth BookCoins, which you can earn by walking. 
         </Text>
-        <Text>You have added {this.state.myBooks.bookTitle} for sale, please add how many BookCoins you would like to sell your book for.</Text>
+        <Text>You have added {this.state.myBooks.bookTitle} for sale, please add how many BookCoins you would like to sell your book for. Book value must be between 1 to 5 BookCoins.</Text>
         <Image
           source={{ uri: this.state.myBooks.bookImage }}
           style={{ width: 295, height: 450, resizeMode: "contain" }}
