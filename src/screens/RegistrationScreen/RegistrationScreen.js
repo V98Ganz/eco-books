@@ -74,10 +74,7 @@ export default function RegistrationScreen({ navigation }) {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Image
-          style={styles.logo}
-          source={require("../../../assets/icon.png")}
-        />
+        <Image style={styles.logo} source={require("../../img/ecobooks.png")} />
         <TextInput
           style={styles.input}
           placeholder="Full Name"
@@ -116,7 +113,7 @@ export default function RegistrationScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <Text style={styles.footerText}>Please Insert Your Books</Text>
+        <Text style={styles.insertBookText}>Please Insert Your Books</Text>
 
         <TextInput
           style={styles.input}
