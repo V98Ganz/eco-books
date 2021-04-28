@@ -9,6 +9,13 @@ export default class BookShop extends Component {
     books: [],
   };
 
+  alertBookShop = (bookId) => {
+    const updatedBooks = this.state.books.filter(
+      (book) => book.bookId !== bookId
+    );
+    this.setState({ books: updatedBooks });
+  };
+
   _renderItem = ({ item, index }) => {
     return (
       <View style={styles.slide}>
@@ -25,6 +32,7 @@ export default class BookShop extends Component {
           bookId={item.bookId}
           bookOwnerName={item.ownerFullName}
           navigation={this.props.navigation}
+          alertBookShop={this.alertBookShop}
         />
       </View>
     );
@@ -39,7 +47,7 @@ export default class BookShop extends Component {
         querySnapshot.forEach((doc) => {
           let usersBooks = [];
           let userId = doc.id;
-          let userFullName = doc.data()
+          let userFullName = doc.data();
           firebase
             .firestore()
             .collection("users")
@@ -51,7 +59,7 @@ export default class BookShop extends Component {
                 const bookData = doc.data();
                 bookData.userId = userId;
                 bookData.bookId = doc.id;
-                bookData.ownerFullName = userFullName.fullName
+                bookData.ownerFullName = userFullName.fullName;
                 usersBooks.push(bookData);
               });
               this.setState((currentState) => {
@@ -64,7 +72,6 @@ export default class BookShop extends Component {
   };
 
   render() {
-    
     return (
       <View style={styles.bookshopBackground}>
         <Carousel

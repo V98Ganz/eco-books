@@ -81,9 +81,11 @@ export default class RegistrationCoinInfo extends Component {
             ></Image>
             <Text style={styles.welcome_text}>Welcome to EcoBooks!</Text>
             <Text style={styles.eco_about}>
-              EcoBooks is a book trading app where we encourage you to read,
-              walk and recycle! Each book in our BookShop is worth BookCoins,
-              which you can earn by walking.
+              EcoBooks is a book trading app where we encourage you to walk,
+              read, and recycle! Each second-hand book in our BookShop is worth
+              BookCoins, which you can earn by walking. For every 1000 steps you
+              walk you earn a bookCoin! Once you have earned enough bookCoins
+              you can purchase a book.
             </Text>
             <View style={styles.line_break}></View>
             <Text style={styles.eco_about}>
