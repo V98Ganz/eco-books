@@ -1,10 +1,10 @@
-import { Picker } from "@react-native-picker/picker";
 import React, { useState } from "react";
 import { Image, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../../firebase/config";
 import { fetchBooks } from "../../utils/utils";
 import styles from "./styles";
+import { Picker } from "@react-native-picker/picker";
 
 export default function RegistrationScreen({ navigation }) {
   const [fullName, setFullName] = useState("");
@@ -14,7 +14,8 @@ export default function RegistrationScreen({ navigation }) {
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookCondition, setBookCondition] = useState("Brand new");
-  const [bookLocation, setBookLocation] = useState("");
+  // const [bookImage, setBookImage] = useState("");
+  // const [isValid, setIsValid] = useState(true);
 
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
@@ -47,7 +48,6 @@ export default function RegistrationScreen({ navigation }) {
           bookDescription: bookInfo.description || "no description found",
           bookImage: bookInfo.imageLinks.thumbnail || "no images found",
           bookCondition: bookCondition,
-          bookLocation: bookLocation,
         };
 
         const usersRef = firebase.firestore().collection("users");
@@ -75,10 +75,7 @@ export default function RegistrationScreen({ navigation }) {
         style={{ flex: 1, width: "100%" }}
         keyboardShouldPersistTaps="always"
       >
-        <Image
-          style={styles.logo}
-          source={require("../../../assets/icon.png")}
-        />
+        <Image style={styles.logo} source={require("../../img/ecobooks.png")} />
         <TextInput
           style={styles.input}
           placeholder="Full Name"
@@ -117,7 +114,7 @@ export default function RegistrationScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <Text style={styles.footerText}>Please Insert Your Books</Text>
+        <Text style={styles.insertBookText}>Please Insert Your Books</Text>
 
         <TextInput
           style={styles.input}
@@ -134,15 +131,6 @@ export default function RegistrationScreen({ navigation }) {
           placeholder="Input book Author"
           onChangeText={(text) => setBookAuthor(text)}
           value={bookAuthor}
-          underlineColorAndroid="transparent"
-          autoCapitalize="none"
-        />
-        <TextInput
-          style={styles.input}
-          placeholderTextColor="#aaaaaa"
-          placeholder="Input book pickup postcode"
-          onChangeText={(text) => setBookLocation(text)}
-          value={bookLocation}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />

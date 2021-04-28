@@ -66,8 +66,13 @@ export default class BuyBooks extends Component {
           .set({
             to: senderInfo.fullName,
           });
+<<<<<<< HEAD
         props.navigation.navigate("Messages", { roomId: doc.id });
       });
+=======
+      });
+    this.props.navigation.navigate("Messages");
+>>>>>>> b78a75182baac6cd28f801b2669bccc085ea9c2d
   };
 
   buyNow = () => {
@@ -119,6 +124,7 @@ export default class BuyBooks extends Component {
                       alert(
                         `Congratulations you have just bought ${this.props.bookTitle}`
                       );
+                      this.props.alertBookCard(this.props.bookId);
                       this.queryCheck(
                         this.props.user,
                         this.props.bookOwnerId,
