@@ -121,4 +121,8 @@ export default StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
   },
+
+  scrollview: {
+    marginHorizontal: 10,
+  },
 });

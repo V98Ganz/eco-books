@@ -66,7 +66,7 @@ export default class RegistrationCoinInfo extends Component {
     }
 
     return (
-      <ScrollView>
+      <ScrollView style={styles.scrollview}>
         <ImageBackground
           style={styles.image_background}
           source={{
