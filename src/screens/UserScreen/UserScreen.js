@@ -87,10 +87,11 @@ export default class UserScreen extends Component {
           </Text>
           {this.state.showingEcobookInstructions ? (
             <Text style={styles.about_ecobooks}>
-              Ecobooks is an app where you can buy and sell books. Instead of
-              using money, you can make Bookcoins by walking. Walking 100 steps
-              can earn you one bookCoin. With this money you are able to then
-              buy and sell your loved and used books to others.
+              EcoBooks is a book trading app where we encourage you to walk,
+              read, and recycle! You can buy and sell your old books in our
+              BookShop with BookCoins, which you can earn by walking. For every
+              1000 steps you walk you earn a bookCoin! Once you have earned
+              enough bookCoins you can purchase a book.
             </Text>
           ) : null}
           <View style={styles.section_icons}>

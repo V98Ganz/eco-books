@@ -82,16 +82,16 @@ export default class RegistrationCoinInfo extends Component {
             <Text style={styles.welcome_text}>Welcome to EcoBooks!</Text>
             <Text style={styles.eco_about}>
               EcoBooks is a book trading app where we encourage you to walk,
-              read, and recycle! Each second-hand book in our BookShop is worth
-              BookCoins, which you can earn by walking. For every 1000 steps you
-              walk you earn a bookCoin! Once you have earned enough bookCoins
-              you can purchase a book.
+              read, and recycle! You can buy and sell your old books in our
+              BookShop with BookCoins, which you can earn by walking. For every
+              1000 steps you walk you earn a bookCoin! Once you have earned
+              enough bookCoins you can purchase a book.
             </Text>
             <View style={styles.line_break}></View>
             <Text style={styles.eco_about}>
               You have added {this.state.myBooks.bookTitle} for sale, please add
-              how many BookCoins you would like to sell your book for. Book
-              value must be between 1 to 5 BookCoins.
+              how many BookCoins you would like to sell your book for. The cost
+              of your book must be between 1 to 5 BookCoins.
             </Text>
             <Image
               source={{ uri: this.state.myBooks.bookImage }}
@@ -99,7 +99,7 @@ export default class RegistrationCoinInfo extends Component {
             />
             <TextInput
               placeholderTextColor="#aaaaaa"
-              placeholder="Value..."
+              placeholder="BookCoin Value..."
               onChangeText={this.handleBookCoin}
               underlineColorAndroid="transparent"
               autoCapitalize="none"
