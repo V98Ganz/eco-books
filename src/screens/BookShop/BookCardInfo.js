@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { firebase } from "../../firebase/config";
 import BuyBooks from "./BuyBooks";
-import { default as ChatMessengerScreen } from "../ChatMessengerScreen/ChatMessengerScreen";
+import { default as MessageSeller } from "./MessageSeller";
 
 export default class BookCardInfo extends Component {
   state = {
@@ -60,7 +60,12 @@ export default class BookCardInfo extends Component {
               <Text style={styles.location}>
                 Book pickup location: {this.props.bookLocation}
               </Text>
-              <Text style={styles.message}>Send Seller Message"</Text>
+              <MessageSeller
+                user={this.props.user}
+                bookOwnerId={this.props.bookOwnerId}
+                bookOwnerName={this.props.bookOwnerName}
+                navigation={this.props.navigation}
+              />
               <BuyBooks
                 bookCost={this.props.bookValue}
                 user={this.props.user}
