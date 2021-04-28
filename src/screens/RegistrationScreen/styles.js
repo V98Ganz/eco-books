@@ -68,7 +68,6 @@ export default StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
-<<<<<<< HEAD
 
   // REG COIN INFO POP UP
 
@@ -141,6 +140,4 @@ export default StyleSheet.create({
   scrollview: {
     marginHorizontal: 10,
   },
-=======
->>>>>>> 6084a2ddc33f7bea150a47647999d109d4b68392
 });
