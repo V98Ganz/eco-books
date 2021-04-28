@@ -48,6 +48,7 @@ function MessageSeller(props) {
           .doc(doc.id)
           .set({
             to: receiverName,
+            roomId: doc.id
           });
         firebase
           .firestore()
@@ -57,6 +58,7 @@ function MessageSeller(props) {
           .doc(doc.id)
           .set({
             to: senderInfo.fullName,
+            roomId: doc.id
           });
         props.navigation.navigate("Messages", { roomId: doc.id, screen: 'bookShop' });
       });

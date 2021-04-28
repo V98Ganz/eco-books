@@ -66,13 +66,8 @@ export default class BuyBooks extends Component {
           .set({
             to: senderInfo.fullName,
           });
-<<<<<<< HEAD
         props.navigation.navigate("Messages", { roomId: doc.id });
       });
-=======
-      });
-    this.props.navigation.navigate("Messages");
->>>>>>> b78a75182baac6cd28f801b2669bccc085ea9c2d
   };
 
   buyNow = () => {
