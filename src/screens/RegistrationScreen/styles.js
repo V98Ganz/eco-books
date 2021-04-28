@@ -70,7 +70,10 @@ export default StyleSheet.create({
   },
 
   welcome_text: {
+    marginTop: 20,
     fontSize: 30,
+    textDecorationLine: "underline",
+    textDecorationColor: "#389f30",
   },
 
   eco_about: {
@@ -86,5 +89,36 @@ export default StyleSheet.create({
     backgroundColor: "#3f3f3f",
     marginTop: 20,
     marginBottom: 20,
+  },
+
+  coin_amount_entry: {
+    height: 55,
+    width: 120,
+    borderWidth: 3,
+    borderColor: "#3f3f3f",
+    padding: 15,
+    marginTop: 20,
+    fontSize: 25,
+  },
+
+  get_started_button: {
+    marginBottom: 30,
+    marginTop: 30,
+    height: 50,
+    width: 150,
+    backgroundColor: "#389f30",
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  button_text: {
+    color: "#ffffff",
+    fontSize: 20,
+  },
+
+  image_background: {
+    flex: 1,
+    resizeMode: "cover",
   },
 });
