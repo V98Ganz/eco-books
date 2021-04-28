@@ -1,10 +1,4 @@
-import {
-  Button,
-  View,
-  TextInput,
-  Alert,
-  ScrollView,
-} from "react-native";
+import { Button, View, TextInput, Alert, ScrollView } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";
 import SingleMessage from "../ChatMessengerScreen/SingleMessage";
