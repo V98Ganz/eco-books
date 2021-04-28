@@ -90,8 +90,8 @@ export default class RegistrationCoinInfo extends Component {
             <View style={styles.line_break}></View>
             <Text style={styles.eco_about}>
               You have added {this.state.myBooks.bookTitle} for sale, please add
-              how many BookCoins you would like to sell your book for. Book
-              value must be between 1 to 5 BookCoins.
+              how many BookCoins you would like to sell your book for. The cost
+              of your book must be between 1 to 5 BookCoins.
             </Text>
             <Image
               source={{ uri: this.state.myBooks.bookImage }}

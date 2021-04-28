@@ -50,7 +50,7 @@ export default StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 10,
+    marginLeft: 50,
     color: "#389f30",
   },
   footerView: {
@@ -137,7 +137,7 @@ export default StyleSheet.create({
     resizeMode: "cover",
   },
 
-  scrollview: {
-    marginHorizontal: 10,
-  },
+  // scrollview: {
+  //   // marginHorizontal: 10,
+  // },
 });
