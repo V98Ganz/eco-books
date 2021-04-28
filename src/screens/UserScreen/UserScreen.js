@@ -9,7 +9,7 @@ export default class UserScreen extends Component {
     showingMyBooks: false,
     showingEcobookInstructions: false,
     showingAddNewBook: false,
-    addedNewBook: false
+    addedNewBook: false,
   };
 
   viewMyBooks = () => {
@@ -54,35 +54,40 @@ export default class UserScreen extends Component {
         return { addedNewBook: true };
       }
     });
-  }
+  };
 
   render() {
     return (
       <View>
-      <KeyboardAwareScrollView>
-        <Text>Welcome back {this.props.user.fullName}!</Text>
-        <Text onPress={this.viewEcobookInstructions}>
-          How does EcoBooks work?
-        </Text>
-        {this.state.showingEcobookInstructions ? (
-          <Text>
-            Ecobooks is an app where you can buy and sell books. Instead of
-            using money, you can make Bookcoins by walkings. Walking 100 steps
-            can earn you one bookCoin. With this money you are able to then buy
-            and sell your loved and used books to others.
+        <KeyboardAwareScrollView>
+          <Text>Welcome back {this.props.user.fullName}!</Text>
+          <Text onPress={this.viewEcobookInstructions}>
+            How does EcoBooks work?
           </Text>
-        ) : null}
-        <Text onPress={this.viewMyBooks}>Your Books</Text>
-        {this.state.showingMyBooks ? (
-          <MyBooksCarousel user={this.props.user} addedBook={this.state.addedNewBook}/>
-        ) : null}
-        <Text onPress={this.viewAddNewBooks}>Add a new Book!</Text>
-        {this.state.showingAddNewBook ? (
-          <AddBookFrom user={this.props.user} updateAddedNewBook={this.updateAddedNewBook}/>
-        ) : null}
-      </KeyboardAwareScrollView>
+          {this.state.showingEcobookInstructions ? (
+            <Text>
+              Ecobooks is an app where you can buy and sell books. Instead of
+              using money, you can make Bookcoins by walkings. Walking 100 steps
+              can earn you one bookCoin. With this money you are able to then
+              buy and sell your loved and used books to others.
+            </Text>
+          ) : null}
+          <Text onPress={this.viewMyBooks}>Your Books</Text>
+          {this.state.showingMyBooks ? (
+            <MyBooksCarousel
+              user={this.props.user}
+              addedBook={this.state.addedNewBook}
+            />
+          ) : null}
+          <Text onPress={this.viewAddNewBooks}>Add a new Book!</Text>
+          {this.state.showingAddNewBook ? (
+            <AddBookFrom
+              user={this.props.user}
+              updateAddedNewBook={this.updateAddedNewBook}
+            />
+          ) : null}
+        </KeyboardAwareScrollView>
       </View>
-      
     );
   }
 }
