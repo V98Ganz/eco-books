@@ -39,6 +39,7 @@ export default function RegistrationScreen({ navigation }) {
           id: uid,
           email,
           fullName,
+          coins: 0,
         };
 
         const booksData = {
