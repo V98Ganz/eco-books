@@ -50,7 +50,7 @@ export default StyleSheet.create({
     alignItems: "center",
     marginTop: 10,
     marginBottom: 10,
-    marginLeft: 120,
+    marginLeft: 50,
     color: "#389f30",
   },
   footerView: {
@@ -108,7 +108,7 @@ export default StyleSheet.create({
 
   coin_amount_entry: {
     height: 55,
-    width: 120,
+    width: 250,
     borderWidth: 3,
     borderColor: "#3f3f3f",
     padding: 15,
@@ -137,7 +137,7 @@ export default StyleSheet.create({
     resizeMode: "cover",
   },
 
-  scrollview: {
-    marginHorizontal: 10,
-  },
+  // scrollview: {
+  //   // marginHorizontal: 10,
+  // },
 });
