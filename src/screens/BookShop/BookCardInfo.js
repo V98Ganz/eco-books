@@ -17,6 +17,10 @@ export default class BookCardInfo extends Component {
     showingPicture: true,
   };
 
+  alertBookCard = (bookId) => {
+    this.props.alertBookShop(bookId);
+  };
+
   changeView = () => {
     this.setState((currentState) => {
       if (currentState.showingPicture) {
@@ -74,6 +78,7 @@ export default class BookCardInfo extends Component {
                 bookId={this.props.bookId}
                 bookOwnerName={this.props.bookOwnerName}
                 navigation={this.props.navigation}
+                alertBookCard={this.alertBookCard}
               />
             </TouchableOpacity>
           </ScrollView>
