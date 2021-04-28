@@ -1,16 +1,13 @@
 import {
   Button,
   View,
-  Text,
   TextInput,
   Alert,
   ScrollView,
-  SafeAreaView,
 } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";
 import SingleMessage from "../ChatMessengerScreen/SingleMessage";
-// import { GiftedChat } from "react-native-gifted-chat";
 import styles from "../ChatMessengerScreen/styles";
 
 export default class ConversationScreen extends React.Component {
@@ -30,17 +27,9 @@ export default class ConversationScreen extends React.Component {
         const conversation = querySnapshot.docs.map((doc) => {
           const firebaseData = doc.data();
           return firebaseData;
-          // console.log(firebaseData, "<<<< firebase data");
         });
-        // const conversation = {};
-
-        // snapshot.forEach((doc) => {
-        //   conversation[doc.id] = doc.data();
-        // });
-        // const chats = Object.values(conversation);
         cb(conversation);
       });
-    // console.log(typeof snapshot);
     return snapshot;
   };
 
@@ -48,10 +37,6 @@ export default class ConversationScreen extends React.Component {
     this.getMessagesFromChatroom((messages) => {
       this.setState({ convo: messages });
     });
-    // .then((messages) => {
-    //   console.log(messages());
-    //   this.setState({ convo: messages });
-    // });
   }
 
   sendMessage = () => {
@@ -96,7 +81,6 @@ export default class ConversationScreen extends React.Component {
 
   render() {
     const { convo, senderMessage } = this.state;
-    // console.log(senderMessage);
     return (
       <ScrollView>
         <View style={{ paddingBottom: 50 }}>
@@ -114,7 +98,7 @@ export default class ConversationScreen extends React.Component {
               placeholderTextColor="#3f3f3f"
               onChangeText={this.onChange}
               clearButtonMode="always"
-              value={this.state.senderMessage}
+              value={senderMessage}
             ></TextInput>
             <Button title="Send" onPress={() => this.sendMessage()}></Button>
           </View>

@@ -23,6 +23,8 @@ export default class BookShop extends Component {
           bookOwnerId={item.userId}
           user={this.props.user}
           bookId={item.bookId}
+          bookOwnerName={item.ownerFullName}
+          navigation={this.props.navigation}
         />
       </View>
     );
@@ -37,6 +39,7 @@ export default class BookShop extends Component {
         querySnapshot.forEach((doc) => {
           let usersBooks = [];
           let userId = doc.id;
+          let userFullName = doc.data()
           firebase
             .firestore()
             .collection("users")
@@ -48,6 +51,7 @@ export default class BookShop extends Component {
                 const bookData = doc.data();
                 bookData.userId = userId;
                 bookData.bookId = doc.id;
+                bookData.ownerFullName = userFullName.fullName
                 usersBooks.push(bookData);
               });
               this.setState((currentState) => {
@@ -60,6 +64,7 @@ export default class BookShop extends Component {
   };
 
   render() {
+    
     return (
       <View style={styles.bookshopBackground}>
         <Carousel
