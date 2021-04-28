@@ -43,6 +43,7 @@ function MessageSeller(props) {
         users: [senderInfo.id, receiverId],
       })
       .then((doc) => {
+          
         firebase
           .firestore()
           .collection("users")
@@ -61,8 +62,8 @@ function MessageSeller(props) {
           .set({
             to: senderInfo.fullName,
           });
-      });
-    props.navigation.navigate("Messages");
+          props.navigation.navigate("Messages", {roomId: doc.id});
+      })
   };
 
   return (

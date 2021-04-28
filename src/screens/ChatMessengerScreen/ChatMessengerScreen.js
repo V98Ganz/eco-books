@@ -25,6 +25,7 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   componentDidMount() {
+    // console.log(this.props.roomId)
     this.getCurrentConversations().then((conversations) => {
       this.setState({ convoIds: conversations });
     });

@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
-import { firebase } from "../../firebase/config";
 import BuyBooks from "./BuyBooks";
 import { default as MessageSeller } from "./MessageSeller";
 
