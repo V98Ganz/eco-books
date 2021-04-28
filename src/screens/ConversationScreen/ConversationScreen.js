@@ -1,9 +1,11 @@
 import {
   Button,
+  Text,
   View,
   TextInput,
   Alert,
   ScrollView,
+  TouchableOpacity,
 } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";
@@ -80,18 +82,23 @@ export default class ConversationScreen extends React.Component {
   };
 
   render() {
+    const { senderName } = this.props;
     const { convo, senderMessage } = this.state;
     return (
-      <ScrollView>
-        <View style={{ paddingBottom: 50 }}>
+      <ScrollView style={styles.chatLog}>
+        <View>
           {convo.map((convObj) => {
             return (
               <View key={convObj.id || "no id found here"}>
-                <SingleMessage sentBy={convObj.sentBy} value={convObj.text} />
+                <SingleMessage
+                  sentBy={convObj.sentBy}
+                  value={convObj.text}
+                  senderName={senderName}
+                />
               </View>
             );
           })}
-          <View style={styles.send_message}>
+          <View style={styles.send_message_section}>
             <TextInput
               style={styles.text_input}
               placeholder="Type your message..."
@@ -100,7 +107,13 @@ export default class ConversationScreen extends React.Component {
               clearButtonMode="always"
               value={senderMessage}
             ></TextInput>
-            <Button title="Send" onPress={() => this.sendMessage()}></Button>
+            <TouchableOpacity
+              style={styles.send_button}
+              title="Send"
+              onPress={() => this.sendMessage()}
+            >
+              <Text style={styles.send_button_text}> Send</Text>
+            </TouchableOpacity>
           </View>
         </View>
       </ScrollView>
