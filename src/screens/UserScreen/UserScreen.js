@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { Text, View } from "react-native";
+import { Text, View, ImageBackground } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import AddBookFrom from "./AddBookForm";
 import MyBooksCarousel from "./MyBooksCarousel";
 import styles from "./styles";
+import bookBackground from "../../img/booksWallpaper.png";
 import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
 import {
   faBook,
@@ -66,11 +67,17 @@ export default class UserScreen extends Component {
 
   render() {
     return (
-      <View style={styles.content_container}>
+      <ImageBackground source={bookBackground} style={styles.content_container}>
         <KeyboardAwareScrollView>
-          <Text>Welcome back {this.props.user.fullName}!</Text>
+          <Text style={styles.welcome_message}>
+            Welcome back {this.props.user.fullName}!
+          </Text>
           <View style={styles.section_icons}>
-            <FontAwesomeIcon icon={faQuestionCircle} size={70} />
+            <FontAwesomeIcon
+              icon={faQuestionCircle}
+              size={90}
+              color="#389F30"
+            />
           </View>
           <Text
             style={styles.section_headers}
@@ -81,16 +88,16 @@ export default class UserScreen extends Component {
           {this.state.showingEcobookInstructions ? (
             <Text style={styles.about_ecobooks}>
               Ecobooks is an app where you can buy and sell books. Instead of
-              using money, you can make Bookcoins by walkings. Walking 100 steps
+              using money, you can make Bookcoins by walking. Walking 100 steps
               can earn you one bookCoin. With this money you are able to then
               buy and sell your loved and used books to others.
             </Text>
           ) : null}
           <View style={styles.section_icons}>
-            <FontAwesomeIcon icon={faBook} size={70} />
+            <FontAwesomeIcon icon={faBook} size={90} color="#389F30" />
           </View>
           <Text style={styles.section_headers} onPress={this.viewMyBooks}>
-            Your Books
+            View Your Books
           </Text>
           {this.state.showingMyBooks ? (
             <MyBooksCarousel
@@ -99,7 +106,7 @@ export default class UserScreen extends Component {
             />
           ) : null}
           <View style={styles.section_icons}>
-            <FontAwesomeIcon icon={faPlusCircle} size={70} />
+            <FontAwesomeIcon icon={faPlusCircle} size={90} color="#389F30" />
           </View>
           <Text style={styles.section_headers} onPress={this.viewAddNewBooks}>
             Add a new Book!
@@ -111,7 +118,7 @@ export default class UserScreen extends Component {
             />
           ) : null}
         </KeyboardAwareScrollView>
-      </View>
+      </ImageBackground>
     );
   }
 }
