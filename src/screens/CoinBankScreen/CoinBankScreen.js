@@ -1,7 +1,16 @@
+import { CardStyleInterpolators } from "@react-navigation/stack";
 import { Pedometer } from "expo-sensors";
 import React from "react";
-import { Alert, Button, StyleSheet, Text, View } from "react-native";
+import {
+  Alert,
+  Button,
+  Text,
+  View,
+  ImageBackground,
+  TouchableOpacity,
+} from "react-native";
 import { firebase } from "../../firebase/config";
+import styles from "./styles";
 
 const Separator = () => <View style={styles.separator} />;
 
@@ -93,23 +102,48 @@ export default class PedometerScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <Text style={styles.title}>Your Coins</Text>
-          <Text>{this.state.userObject.coins}</Text>
-        </View>
-        <View>
-          <Text style={styles.title}>Press to start step count</Text>
-          <Button title="Start" onPress={() => this.startWorkout()} />
-          <Separator />
-        </View>
-        {/* <Text>Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}</Text>
+        <ImageBackground
+          source={{
+            uri:
+              "https://images.unsplash.com/photo-1562046433-dd0db5baddcd?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=668&q=80",
+          }}
+          style={styles.background_img}
+        >
+          <View style={styles.center_things}>
+            <View style={styles.coincount_wrapper}>
+              <Text style={styles.title_top}>Your Coins</Text>
+              <Text style={styles.coin_amount}>
+                {this.state.userObject.coins}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.center_things}>
+            <Text style={styles.title}>Press to start step count</Text>
+            <TouchableOpacity
+              style={styles.start_button}
+              onPress={() => this.startWorkout()}
+            >
+              <Text style={styles.button_text}>Start</Text>
+            </TouchableOpacity>
+            <Separator />
+          </View>
+          {/* <Text>Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}</Text>
         <Text>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text> */}
-        <Text>{this.state.currentStepCount}</Text>
-        <Separator />
-        <View>
-          <Text style={styles.title}>Press to stop step count</Text>
-          <Button title="Stop" onPress={() => this.sendToFirestore()} />
-        </View>
+          <Text style={styles.currentStepCount}>
+            {this.state.currentStepCount}
+          </Text>
+          <Separator />
+          <View style={styles.center_things}>
+            <Text style={styles.title}>Press to stop step count</Text>
+            <TouchableOpacity
+              style={styles.stop_button}
+              title="Stop"
+              onPress={() => this.sendToFirestore()}
+            >
+              <Text style={styles.button_text}>Stop</Text>
+            </TouchableOpacity>
+          </View>
+        </ImageBackground>
       </View>
     );
   }
@@ -119,11 +153,11 @@ const stepsToCoins = (steps) => {
   return steps / 10;
 };
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "center",
+//   },
+// });
