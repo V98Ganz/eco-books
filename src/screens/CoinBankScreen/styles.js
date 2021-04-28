@@ -45,7 +45,7 @@ export default StyleSheet.create({
   },
 
   start_button: {
-    backgroundColor: "#91D675",
+    backgroundColor: "#389F30",
     width: 130,
     height: 130,
     borderRadius: 100,
