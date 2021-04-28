@@ -12,46 +12,43 @@ export default function AddBookFrom(props) {
   const [bookCondition, setBookCondition] = useState("Brand new");
   const [bookValue, setBookValue] = useState("");
   const [bookLocation, setBookLocation] = useState("");
-  
-  
-  const onAddBook = () => {
-    
-    if (bookValue > 0 && bookValue < 6) {
-  
-    fetchBooks(bookTitle, bookAuthor)
-      .then((bookInfo) => {
-        const booksData = {
-          bookTitle: bookInfo.title || "no title found",
-          bookAuthor: bookInfo.authors[0] || "no author found",
-          bookDescription: bookInfo.description || "no description found",
-          bookImage: bookInfo.imageLinks.thumbnail || "no images found",
-          bookCondition: bookCondition,
-          bookValue: bookValue,
-          bookLocation: bookLocation,
-        };
-        firebase
-          .firestore()
-          .collection("users")
 
-          .doc(props.user.id)
-          .collection("books")
-          .doc(bookTitle)
-          .set(booksData);
-      })
-      .then(() => {
-        alert("Your book has been added");
-        props.updateAddedNewBook()
-        setBookTitle("")
-        setBookAuthor("")
-        setBookValue("")
-        setBookLocation("")
-      })
-    
-      .catch((error) => {
-        alert(error);
-      });
+  const onAddBook = () => {
+    if (bookValue > 0 && bookValue < 6) {
+      fetchBooks(bookTitle, bookAuthor)
+        .then((bookInfo) => {
+          const booksData = {
+            bookTitle: bookInfo.title || "no title found",
+            bookAuthor: bookInfo.authors[0] || "no author found",
+            bookDescription: bookInfo.description || "no description found",
+            bookImage: bookInfo.imageLinks.thumbnail || "no images found",
+            bookCondition: bookCondition,
+            bookValue: bookValue,
+            bookLocation: bookLocation,
+          };
+          firebase
+            .firestore()
+            .collection("users")
+
+            .doc(props.user.id)
+            .collection("books")
+            .doc(bookTitle)
+            .set(booksData);
+        })
+        .then(() => {
+          alert("Your book has been added");
+          props.updateAddedNewBook();
+          setBookTitle("");
+          setBookAuthor("");
+          setBookValue("");
+          setBookLocation("");
+        })
+
+        .catch((error) => {
+          alert(error);
+        });
     } else {
-      alert("This is an invalid BookCoin value, please re-enter!")
+      alert("This is an invalid BookCoin value, please re-enter!");
     }
   };
 
@@ -79,7 +76,7 @@ export default function AddBookFrom(props) {
         underlineColorAndroid="transparent"
         autoCapitalize="none"
       />
-       <TextInput
+      <TextInput
         style={styles.input}
         placeholderTextColor="#aaaaaa"
         placeholder="Input book value"
