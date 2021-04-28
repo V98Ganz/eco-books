@@ -4,10 +4,7 @@ import { firebase } from "../../firebase/config";
 
 function MessageSeller(props) {
   queryCheck = async (senderInfo, receiverId, receiverName) => {
-    const result = await checkDataBaseForChatRoom(
-      senderInfo.id,
-      receiverId
-    );
+    const result = await checkDataBaseForChatRoom(senderInfo.id, receiverId);
     const isThereARoom = await result.find((item) => item === true);
     if (isThereARoom) {
       props.navigation.navigate("Messages");
@@ -43,7 +40,6 @@ function MessageSeller(props) {
         users: [senderInfo.id, receiverId],
       })
       .then((doc) => {
-          
         firebase
           .firestore()
           .collection("users")
@@ -62,14 +58,18 @@ function MessageSeller(props) {
           .set({
             to: senderInfo.fullName,
           });
-          props.navigation.navigate("Messages", {roomId: doc.id});
-      })
+        props.navigation.navigate("Messages", { roomId: doc.id, screen: 'bookShop' });
+      });
   };
 
   return (
-
-      <Text onPress={() => queryCheck(props.user, props.bookOwnerId, props.bookOwnerName)} >Contact Seller</Text>
-
+    <Text
+      onPress={() =>
+        queryCheck(props.user, props.bookOwnerId, props.bookOwnerName)
+      }
+    >
+      Contact Seller
+    </Text>
   );
 }
 

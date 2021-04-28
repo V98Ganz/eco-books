@@ -9,12 +9,15 @@ export default class BuyBooks extends Component {
   };
 
   queryCheck = async (senderInfo, receiverId, receiverName) => {
-    const result = await this.checkDataBaseForChatRoom(senderInfo.id, receiverId);
+    const result = await this.checkDataBaseForChatRoom(
+      senderInfo.id,
+      receiverId
+    );
     const isThereARoom = await result.find((item) => item === true);
     if (isThereARoom) {
-      this.props.navigation.navigate('Messages')
+      this.props.navigation.navigate("Messages");
     } else {
-    this.startChat(senderInfo, receiverId, receiverName);
+      this.startChat(senderInfo, receiverId, receiverName);
     }
   };
 
@@ -38,7 +41,6 @@ export default class BuyBooks extends Component {
   };
 
   startChat = (senderInfo, receiverId, receiverName) => {
-
     firebase
       .firestore()
       .collection("chatRooms")
@@ -53,8 +55,8 @@ export default class BuyBooks extends Component {
           .collection("active-conversations")
           .doc(doc.id)
           .set({
-            to: receiverName
-          })
+            to: receiverName,
+          });
         firebase
           .firestore()
           .collection("users")
@@ -62,10 +64,10 @@ export default class BuyBooks extends Component {
           .collection("active-conversations")
           .doc(doc.id)
           .set({
-            to: senderInfo.fullName
-          })
-      })
-      this.props.navigation.navigate('Messages')
+            to: senderInfo.fullName,
+          });
+        props.navigation.navigate("Messages", { roomId: doc.id });
+      });
   };
 
   buyNow = () => {
@@ -117,8 +119,11 @@ export default class BuyBooks extends Component {
                       alert(
                         `Congratulations you have just bought ${this.props.bookTitle}`
                       );
-                      this.queryCheck(this.props.user, this.props.bookOwnerId, this.props.bookOwnerName)
-                       
+                      this.queryCheck(
+                        this.props.user,
+                        this.props.bookOwnerId,
+                        this.props.bookOwnerName
+                      );
                     });
                 });
             });
