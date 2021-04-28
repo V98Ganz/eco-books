@@ -4,7 +4,7 @@ import { Text, TextInput, TouchableOpacity, View } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { firebase } from "../../firebase/config";
 import { fetchBooks } from "../../utils/utils";
-import styles from "../RegistrationScreen/styles";
+import styles from "./styles";
 
 export default function AddBookFrom(props) {
   const [bookTitle, setBookTitle] = useState("");
