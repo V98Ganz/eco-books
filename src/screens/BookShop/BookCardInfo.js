@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import {
+  Button,
   Image,
   ScrollView,
   StyleSheet,
@@ -7,7 +8,9 @@ import {
   TouchableOpacity,
   View,
 } from "react-native";
+import { firebase } from "../../firebase/config";
 import BuyBooks from "./BuyBooks";
+import { default as MessageSeller } from "./MessageSeller";
 
 export default class BookCardInfo extends Component {
   state = {
@@ -21,6 +24,12 @@ export default class BookCardInfo extends Component {
       } else {
         return { showingPicture: true };
       }
+    });
+  };
+
+  goBack = () => {
+    this.setState({
+      renderChatMessengerScreen: false,
     });
   };
 
@@ -51,13 +60,20 @@ export default class BookCardInfo extends Component {
               <Text style={styles.location}>
                 Book pickup location: {this.props.bookLocation}
               </Text>
-              <Text style={styles.message}>Send seller message</Text>
+              <MessageSeller
+                user={this.props.user}
+                bookOwnerId={this.props.bookOwnerId}
+                bookOwnerName={this.props.bookOwnerName}
+                navigation={this.props.navigation}
+              />
               <BuyBooks
                 bookCost={this.props.bookValue}
                 user={this.props.user}
                 bookOwnerId={this.props.bookOwnerId}
                 bookTitle={this.props.bookTitle}
                 bookId={this.props.bookId}
+                bookOwnerName={this.props.bookOwnerName}
+                navigation={this.props.navigation}
               />
             </TouchableOpacity>
           </ScrollView>
