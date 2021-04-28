@@ -68,4 +68,76 @@ export default StyleSheet.create({
     fontWeight: "bold",
     fontSize: 16,
   },
+
+  // REG COIN INFO POP UP
+
+  eco_logo: {
+    width: 100,
+    height: 80,
+    marginTop: 30,
+  },
+
+  content_container: {
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+  },
+
+  welcome_text: {
+    marginTop: 20,
+    fontSize: 30,
+    textDecorationLine: "underline",
+    textDecorationColor: "#389f30",
+  },
+
+  eco_about: {
+    fontSize: 20,
+    padding: 20,
+    lineHeight: 27,
+    letterSpacing: 1,
+  },
+
+  line_break: {
+    width: "70%",
+    height: 1,
+    backgroundColor: "#3f3f3f",
+    marginTop: 20,
+    marginBottom: 20,
+  },
+
+  coin_amount_entry: {
+    height: 55,
+    width: 120,
+    borderWidth: 3,
+    borderColor: "#3f3f3f",
+    padding: 15,
+    marginTop: 20,
+    fontSize: 25,
+  },
+
+  get_started_button: {
+    marginBottom: 30,
+    marginTop: 30,
+    height: 50,
+    width: 150,
+    backgroundColor: "#389f30",
+    borderRadius: 50,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  button_text: {
+    color: "#ffffff",
+    fontSize: 20,
+  },
+
+  image_background: {
+    flex: 1,
+    resizeMode: "cover",
+  },
+
+  scrollview: {
+    marginHorizontal: 10,
+  },
 });
