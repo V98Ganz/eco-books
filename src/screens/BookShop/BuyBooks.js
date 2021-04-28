@@ -8,6 +8,66 @@ export default class BuyBooks extends Component {
     bookOwnerObject: {},
   };
 
+  queryCheck = async (senderInfo, receiverId, receiverName) => {
+    const result = await this.checkDataBaseForChatRoom(senderInfo.id, receiverId);
+    const isThereARoom = await result.find((item) => item === true);
+    if (isThereARoom) {
+      this.props.navigation.navigate('Messages')
+    } else {
+    this.startChat(senderInfo, receiverId, receiverName);
+    }
+  };
+
+  checkDataBaseForChatRoom = async (senderId, receiverId) => {
+    const snapshot = await firebase.firestore().collection("chatRooms").get();
+    const collection = {};
+    snapshot.forEach((doc) => {
+      collection[doc.id] = doc.data();
+    });
+
+    const values = Object.values(collection);
+    let isMatched = [];
+
+    for (let obj of values) {
+      const matchedIds = obj.users.every(
+        (value) => value === senderId || value === receiverId
+      );
+      isMatched.push(matchedIds);
+    }
+    return isMatched;
+  };
+
+  startChat = (senderInfo, receiverId, receiverName) => {
+
+    firebase
+      .firestore()
+      .collection("chatRooms")
+      .add({
+        users: [senderInfo.id, receiverId],
+      })
+      .then((doc) => {
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(senderInfo.id)
+          .collection("active-conversations")
+          .doc(doc.id)
+          .set({
+            to: receiverName
+          })
+        firebase
+          .firestore()
+          .collection("users")
+          .doc(receiverId)
+          .collection("active-conversations")
+          .doc(doc.id)
+          .set({
+            to: senderInfo.fullName
+          })
+      })
+      this.props.navigation.navigate('Messages')
+  };
+
   buyNow = () => {
     const usersRef = firebase.firestore().collection("users");
     usersRef
@@ -57,7 +117,8 @@ export default class BuyBooks extends Component {
                       alert(
                         `Congratulations you have just bought ${this.props.bookTitle}`
                       );
-                      //redirect to chat with bookower and user
+                      this.queryCheck(this.props.user, this.props.bookOwnerId, this.props.bookOwnerName)
+                       
                     });
                 });
             });
