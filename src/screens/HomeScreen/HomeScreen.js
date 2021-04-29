@@ -4,6 +4,13 @@ import { default as BookShop } from "../BookShop/BookShop";
 import { default as CoinBankScreen } from "../CoinBankScreen/CoinBankScreen";
 import { default as UserScreen } from "../UserScreen/UserScreen";
 import { default as ChatMessengerScreen } from "../ChatMessengerScreen/ChatMessengerScreen";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faBook,
+  faEnvelope,
+  faCoins,
+  faUser,
+} from "@fortawesome/free-solid-svg-icons";
 
 const Tab = createBottomTabNavigator();
 
@@ -16,11 +23,49 @@ export default function HomeScreen(props) {
   }
 
   return (
-    <Tab.Navigator initialRouteName={"BookShop"}>
+    <Tab.Navigator
+      initialRouteName={"BookShop"}
+      screenOptions={({ route }) => {
+        if (route.name === "BookShop") {
+          return {
+            tabBarIcon: () => {
+              return (
+                <FontAwesomeIcon icon={faBook} color="#389f70" size={23} />
+              );
+            },
+          };
+        } else if (route.name === "Messages") {
+          return {
+            tabBarIcon: () => {
+              return (
+                <FontAwesomeIcon icon={faEnvelope} color="#389f70" size={23} />
+              );
+            },
+          };
+        } else if (route.name === "CoinBank") {
+          return {
+            tabBarIcon: () => {
+              return (
+                <FontAwesomeIcon icon={faCoins} color="#389f70" size={23} />
+              );
+            },
+          };
+        } else {
+          return {
+            tabBarIcon: () => {
+              return (
+                <FontAwesomeIcon icon={faUser} color="#389f70" size={23} />
+              );
+            },
+          };
+        }
+      }}
+    >
       <Tab.Screen name="UserProfile">
         {(props) => <UserScreen {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="BookShop">
+        {/* <FontAwesomeIcon icon={faQuestionCircle} /> */}
         {(props) => <BookShop {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="Messages">

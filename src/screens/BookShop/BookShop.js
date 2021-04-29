@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { Dimensions, StyleSheet, View } from "react-native";
+import {
+  Dimensions,
+  StyleSheet,
+  View,
+  Image,
+  ImageBackground,
+} from "react-native";
 import Carousel from "react-native-snap-carousel";
 import { firebase } from "../../firebase/config";
 import BookCardInfo from "./BookCardInfo";
@@ -73,17 +79,24 @@ export default class BookShop extends Component {
 
   render() {
     return (
-      <View style={styles.bookshopBackground}>
-        <Carousel
-          layout={"default"}
-          ref={(ref) => (this.carousel = ref)}
-          data={this.state.books}
-          renderItem={this._renderItem}
-          sliderWidth={Dimensions.get("window").width}
-          sliderHeight={450}
-          itemWidth={300}
-        />
-      </View>
+      <ImageBackground style={styles.image_background}>
+        <View style={styles.bookshopBackground}>
+          <Image
+            source={require("../../img/ecobooks.png")}
+            style={styles.homescreen_logo}
+          />
+          <Carousel
+            style={styles.carousel_styling}
+            layout={"default"}
+            ref={(ref) => (this.carousel = ref)}
+            data={this.state.books}
+            renderItem={this._renderItem}
+            sliderWidth={Dimensions.get("window").width}
+            sliderHeight={450}
+            itemWidth={300}
+          />
+        </View>
+      </ImageBackground>
     );
   }
 }
@@ -92,12 +105,27 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
-    marginTop: 100,
+    marginTop: 40,
     overflow: "scroll",
     height: 450,
     borderRadius: 10,
   },
   bookshopBackground: {
-    backgroundColor: "#1c9f5e",
+    backgroundColor: "#ffffff",
+    flex: 1,
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+
+  homescreen_logo: {
+    margin: 30,
+    width: 130,
+    height: 100,
+  },
+
+  image_background: {
+    flex: 1,
+    resizeMode: "cover",
   },
 });
