@@ -146,7 +146,7 @@ export default class BuyBooks extends Component {
 const styles = StyleSheet.create({
   bookcard_button: {
     backgroundColor: "#389f70",
-    width: 100,
+    width: 105,
     borderRadius: 50,
     padding: 5,
   },
