@@ -60,7 +60,7 @@ function MessageSeller(props) {
             to: senderInfo.fullName,
             roomId: doc.id
           });
-        props.navigation.navigate("Messages", { roomId: doc.id, screen: 'bookShop' });
+        props.navigation.navigate("Messages");
       });
   };
 

@@ -8,7 +8,6 @@ import { default as ChatMessengerScreen } from "../ChatMessengerScreen/ChatMesse
 const Tab = createBottomTabNavigator();
 
 export default function HomeScreen(props) {
-  console.log();
   let userObject = {};
   if (props.user) {
     userObject = props.user;

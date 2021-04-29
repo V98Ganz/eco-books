@@ -33,7 +33,7 @@ export default class ChatMessengerScreen extends React.Component {
 
   componentDidMount() {
     this.getCurrentConversations((conversations) => {
-      console.log(conversations)
+
       this.setState({ convoIds: conversations });
     });
   }
@@ -67,7 +67,7 @@ export default class ChatMessengerScreen extends React.Component {
         return (
           <ScrollView>
             {roomzz.map((array) => {
-              console.log(array)
+
               return (
                 <View style={styles.roomLink} key={array.roomId}>
                   <Image

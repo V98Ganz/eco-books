@@ -27,11 +27,13 @@ export default class PedometerScreen extends React.Component {
       .firestore()
       .collection("users")
       .doc(this.props.user.id)
-      .get()
-      .then((doc) => {
-        this.setState({ userObject: doc.data() });
-      });
+      .onSnapshot((doc) => {
+        this.setState({
+          userObject: doc.data()
+        })
+      })
   }
+
 
   startWorkout() {
     Alert.alert("Workout Started");
