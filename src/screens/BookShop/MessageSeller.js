@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import { firebase } from "../../firebase/config";
 
 function MessageSeller(props) {
@@ -60,7 +60,7 @@ function MessageSeller(props) {
             to: senderInfo.fullName,
             roomId: doc.id
           });
-        props.navigation.navigate("Messages", { roomId: doc.id, screen: 'bookShop' });
+        props.navigation.navigate("Messages");
       });
   };
 
