@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { Text } from "react-native";
 import { firebase } from "../../firebase/config";
 
 function MessageSeller(props) {
