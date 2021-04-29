@@ -9,6 +9,7 @@ export default class BuyBooks extends Component {
   };
 
   queryCheck = async (senderInfo, receiverId, receiverName) => {
+
     const result = await this.checkDataBaseForChatRoom(
       senderInfo.id,
       receiverId
@@ -122,16 +123,19 @@ export default class BuyBooks extends Component {
                         `Congratulations you have just bought ${this.props.bookTitle}`
                       );
                       this.props.alertBookCard(this.props.bookId);
-                      this.queryCheck(
-                        this.props.user,
-                        this.props.bookOwnerId,
-                        this.props.bookOwnerName
-                      );
+                      
                     });
                 });
             });
         }
-      });
+      })
+      .then(() => {
+        this.queryCheck(
+          this.props.user,
+          this.props.bookOwnerId,
+          this.props.bookOwnerName
+        );
+      })
   };
 
   render() {
