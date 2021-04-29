@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { firebase } from "../../firebase/config";
 
 export default class BuyBooks extends Component {
@@ -135,6 +135,25 @@ export default class BuyBooks extends Component {
   };
 
   render() {
-    return <Text onPress={this.buyNow}>Buy Now</Text>;
+    return (
+      <TouchableOpacity style={styles.bookcard_button} onPress={this.buyNow}>
+        <Text style={styles.button_text}>Buy Now</Text>
+      </TouchableOpacity>
+    );
   }
 }
+
+const styles = StyleSheet.create({
+  bookcard_button: {
+    backgroundColor: "#389f70",
+    width: 100,
+    borderRadius: 50,
+    padding: 5,
+  },
+
+  button_text: {
+    fontSize: 17,
+    color: "#ffffff",
+    marginLeft: 10,
+  },
+});
