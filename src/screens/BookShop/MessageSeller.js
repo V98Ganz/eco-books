@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, Touchable, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { firebase } from "../../firebase/config";
 
 function MessageSeller(props) {
