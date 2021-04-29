@@ -11,7 +11,6 @@ import {
   faQuestionCircle,
   faPlusCircle,
 } from "@fortawesome/free-solid-svg-icons";
-import { CardStyleInterpolators } from "@react-navigation/stack";
 
 export default class UserScreen extends Component {
   state = {

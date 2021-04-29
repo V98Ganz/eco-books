@@ -14,8 +14,7 @@ export default function RegistrationScreen({ navigation }) {
   const [bookTitle, setBookTitle] = useState("");
   const [bookAuthor, setBookAuthor] = useState("");
   const [bookCondition, setBookCondition] = useState("Brand new");
-  // const [bookImage, setBookImage] = useState("");
-  // const [isValid, setIsValid] = useState(true);
+  const [bookLocation, setBookLocation] = useState("")
 
   const onFooterLinkPress = () => {
     navigation.navigate("Login");
@@ -48,6 +47,7 @@ export default function RegistrationScreen({ navigation }) {
           bookDescription: bookInfo.description || "no description found",
           bookImage: bookInfo.imageLinks.thumbnail || "no images found",
           bookCondition: bookCondition,
+          bookLocation: bookLocation,
         };
 
         const usersRef = firebase.firestore().collection("users");
@@ -121,7 +121,7 @@ export default function RegistrationScreen({ navigation }) {
         <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
-          placeholder="Input book Title"
+          placeholder="Insert book Title"
           onChangeText={(text) => setBookTitle(text)}
           value={bookTitle}
           underlineColorAndroid="transparent"
@@ -130,9 +130,18 @@ export default function RegistrationScreen({ navigation }) {
         <TextInput
           style={styles.input}
           placeholderTextColor="#aaaaaa"
-          placeholder="Input book Author"
+          placeholder="Insert book Author"
           onChangeText={(text) => setBookAuthor(text)}
           value={bookAuthor}
+          underlineColorAndroid="transparent"
+          autoCapitalize="none"
+        />
+         <TextInput
+          style={styles.input}
+          placeholderTextColor="#aaaaaa"
+          placeholder="Insert book pick up location"
+          onChangeText={(text) => setBookLocation(text)}
+          value={bookLocation}
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />

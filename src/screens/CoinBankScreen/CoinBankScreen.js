@@ -1,9 +1,7 @@
-import { CardStyleInterpolators } from "@react-navigation/stack";
 import { Pedometer } from "expo-sensors";
 import React from "react";
 import {
   Alert,
-  Button,
   Text,
   View,
   ImageBackground,
@@ -29,11 +27,10 @@ export default class PedometerScreen extends React.Component {
       .doc(this.props.user.id)
       .onSnapshot((doc) => {
         this.setState({
-          userObject: doc.data()
-        })
-      })
+          userObject: doc.data(),
+        });
+      });
   }
-
 
   startWorkout() {
     Alert.alert("Workout Started");
@@ -129,8 +126,6 @@ export default class PedometerScreen extends React.Component {
             </TouchableOpacity>
             <Separator />
           </View>
-          {/* <Text>Pedometer.isAvailableAsync(): {this.state.isPedometerAvailable}</Text>
-        <Text>Steps taken in the last 24 hours: {this.state.pastStepCount}</Text> */}
           <Text style={styles.currentStepCount}>
             {this.state.currentStepCount}
           </Text>
@@ -154,12 +149,3 @@ export default class PedometerScreen extends React.Component {
 const stepsToCoins = (steps) => {
   return steps / 10;
 };
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "center",
-//   },
-// });

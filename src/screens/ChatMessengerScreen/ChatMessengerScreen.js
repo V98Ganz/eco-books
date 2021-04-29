@@ -33,7 +33,6 @@ export default class ChatMessengerScreen extends React.Component {
 
   componentDidMount() {
     this.getCurrentConversations((conversations) => {
-
       this.setState({ convoIds: conversations });
     });
   }
@@ -51,8 +50,8 @@ export default class ChatMessengerScreen extends React.Component {
         });
         cb(conversation);
       });
-      
-      return snapshot
+
+    return snapshot;
   };
 
   render() {
@@ -67,7 +66,6 @@ export default class ChatMessengerScreen extends React.Component {
         return (
           <ScrollView>
             {roomzz.map((array) => {
-
               return (
                 <View style={styles.roomLink} key={array.roomId}>
                   <Image
@@ -77,9 +75,7 @@ export default class ChatMessengerScreen extends React.Component {
                   <Text style={styles.chat_link_text}>{array.to}</Text>
                   <TouchableOpacity
                     style={styles.chat_button}
-                    onPress={() =>
-                      this.goToChat(array.roomId)
-                    }
+                    onPress={() => this.goToChat(array.roomId)}
                   >
                     <Text style={styles.chat_button_text}>Enter Chat</Text>
                   </TouchableOpacity>
@@ -91,8 +87,7 @@ export default class ChatMessengerScreen extends React.Component {
       } else {
         return <Text>LOADING</Text>;
       }
-    } 
-    else if (this.state.renderOneConversation === true) {
+    } else if (this.state.renderOneConversation === true) {
       return (
         <View>
           <Button title="Go back!" onPress={() => this.goBack()} />
