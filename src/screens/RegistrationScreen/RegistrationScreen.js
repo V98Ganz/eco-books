@@ -114,7 +114,9 @@ export default function RegistrationScreen({ navigation }) {
           underlineColorAndroid="transparent"
           autoCapitalize="none"
         />
-        <Text style={styles.insertBookText}>Please Insert Your Books</Text>
+        <Text style={styles.insertBookText}>
+          Please add a book you would like to sell
+        </Text>
 
         <TextInput
           style={styles.input}

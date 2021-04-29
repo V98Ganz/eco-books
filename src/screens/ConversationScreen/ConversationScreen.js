@@ -1,11 +1,11 @@
 import {
   Button,
-  Text,
   View,
   TextInput,
   Alert,
   ScrollView,
   TouchableOpacity,
+  Text,
 } from "react-native";
 import React from "react";
 import { firebase } from "../../firebase/config";

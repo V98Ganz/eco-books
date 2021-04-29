@@ -32,30 +32,32 @@ export default class ChatMessengerScreen extends React.Component {
   };
 
   componentDidMount() {
-    this.getCurrentConversations().then((conversations) => {
+    this.getCurrentConversations((conversations) => {
+      console.log(conversations)
       this.setState({ convoIds: conversations });
     });
   }
 
-  getCurrentConversations = async () => {
+  getCurrentConversations = async (cb) => {
     const snapshot = await firebase
       .firestore()
       .collection("users")
       .doc(this.props.user.id)
       .collection("active-conversations")
-      .get();
-    const conversation = {};
-
-    snapshot.forEach((doc) => {
-      conversation[doc.id] = doc.data();
-    });
-
-    return conversation;
+      .onSnapshot((querySnapshot) => {
+        const conversation = querySnapshot.docs.map((doc) => {
+          const firebaseData = doc.data();
+          return firebaseData;
+        });
+        cb(conversation);
+      });
+      
+      return snapshot
   };
 
   render() {
     const roomzz = this.state.convoIds;
-    const roomzzEntries = Object.entries(roomzz);
+
     const currentUser = this.props.user.id;
     const currentUserName = this.props.user.fullName;
     const bookOwnerId = this.props.bookOwnerId;
@@ -64,18 +66,19 @@ export default class ChatMessengerScreen extends React.Component {
       if (roomzz) {
         return (
           <ScrollView>
-            {roomzzEntries.map((array) => {
+            {roomzz.map((array) => {
+              console.log(array)
               return (
-                <View style={styles.roomLink} key={array[0]}>
+                <View style={styles.roomLink} key={array.roomId}>
                   <Image
                     style={styles.eco_logo}
                     source={require("../../img/ecobooks.png")}
                   ></Image>
-                  <Text style={styles.chat_link_text}>{array[1].to}</Text>
+                  <Text style={styles.chat_link_text}>{array.to}</Text>
                   <TouchableOpacity
                     style={styles.chat_button}
                     onPress={() =>
-                      this.goToChat(array[0])
+                      this.goToChat(array.roomId)
                     }
                   >
                     <Text style={styles.chat_button_text}>Enter Chat</Text>
@@ -88,7 +91,8 @@ export default class ChatMessengerScreen extends React.Component {
       } else {
         return <Text>LOADING</Text>;
       }
-    } else if (this.state.renderOneConversation === true) {
+    } 
+    else if (this.state.renderOneConversation === true) {
       return (
         <View>
           <Button title="Go back!" onPress={() => this.goBack()} />

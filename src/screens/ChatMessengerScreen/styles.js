@@ -108,8 +108,8 @@ export default StyleSheet.create({
 
   send_message_section: {
     flexDirection: "row",
-    position: "absolute",
-    top: 670,
+    // position: "absolute",
+    // top: 670,
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",
