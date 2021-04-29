@@ -50,7 +50,7 @@ export default StyleSheet.create({
     borderRadius: 50,
     padding: 10,
   },
-
+  // SENDER
   text_bubble: {
     backgroundColor: "#389f30",
     padding: 10,
@@ -74,6 +74,7 @@ export default StyleSheet.create({
 
   receiver: {
     fontSize: 16,
+    color: "#C4F74F",
   },
   // receiver MESSAGES
   text_bubble_receiver: {
@@ -98,7 +99,7 @@ export default StyleSheet.create({
   },
 
   receiver_name: {
-    color: "#389f30",
+    color: "#C9C9C9",
     fontSize: 16,
   },
 
