@@ -39,8 +39,6 @@ export default StyleSheet.create({
 
   // conversation screen styling
   chatLog: {
-    borderWidth: 2,
-    borderColor: "red",
     height: "100%",
   },
 
@@ -108,8 +106,8 @@ export default StyleSheet.create({
 
   send_message_section: {
     flexDirection: "row",
-    // position: "absolute",
-    // top: 670,
+    position: "absolute",
+    top: 670,
     width: "100%",
     alignItems: "center",
     justifyContent: "space-around",

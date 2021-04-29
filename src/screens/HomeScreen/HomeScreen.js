@@ -65,7 +65,6 @@ export default function HomeScreen(props) {
         {(props) => <UserScreen {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="BookShop">
-        {/* <FontAwesomeIcon icon={faQuestionCircle} /> */}
         {(props) => <BookShop {...props} user={userObject} />}
       </Tab.Screen>
       <Tab.Screen name="Messages">
