@@ -56,7 +56,7 @@ export default class BuyBooks extends Component {
           .doc(doc.id)
           .set({
             to: receiverName,
-            roomId: doc.id
+            roomId: doc.id,
           });
         firebase
           .firestore()
@@ -66,7 +66,7 @@ export default class BuyBooks extends Component {
           .doc(doc.id)
           .set({
             to: senderInfo.fullName,
-            roomId: doc.id
+            roomId: doc.id,
           });
         this.props.navigation.navigate("Messages");
       });

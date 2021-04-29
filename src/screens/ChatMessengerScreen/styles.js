@@ -38,16 +38,82 @@ export default StyleSheet.create({
   },
 
   // conversation screen styling
+  chatLog: {
+    height: "100%",
+  },
+
   text_input: {
     height: 40,
     backgroundColor: "#f7f7f7",
     color: "#3f3f3f",
-    width: "80%",
+    width: "70%",
     borderRadius: 50,
     padding: 10,
   },
 
-  send_message: {
+  text_bubble: {
+    backgroundColor: "#389f30",
+    padding: 10,
+    marginLeft: "45%",
+    borderRadius: 5,
+    //marginBottom: 15,
+    marginTop: 5,
+    marginRight: "5%",
+    maxWidth: "50%",
+    alignSelf: "flex-end",
+    //maxWidth: 500,
+
+    borderRadius: 20,
+  },
+
+  bubble_text: {
+    fontSize: 16,
+    color: "#FFFFFF",
+    marginTop: 5,
+  },
+
+  receiver: {
+    fontSize: 16,
+  },
+  // receiver MESSAGES
+  text_bubble_receiver: {
+    backgroundColor: "#3f3f3f",
+    padding: 10,
+    marginRight: "45%",
+    borderRadius: 5,
+    //marginBottom: 15,
+    marginTop: 5,
+    marginLeft: "5%",
+    maxWidth: "50%",
+    alignSelf: "flex-start",
+    //maxWidth: 500,
+
+    borderRadius: 20,
+  },
+
+  bubble_text_receiver: {
+    fontSize: 16,
+    color: "#FFFFFF",
+    marginTop: 5,
+  },
+
+  receiver_name: {
+    color: "#389f30",
+    fontSize: 16,
+  },
+
+  //send message text input and send button
+
+  send_message_section: {
     flexDirection: "row",
+    position: "absolute",
+    top: 670,
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "space-around",
+  },
+
+  send_button_text: {
+    fontSize: 16,
   },
 });
