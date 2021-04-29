@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "react-native";
+import { Text, TouchableOpacity, StyleSheet } from "react-native";
 import { firebase } from "../../firebase/config";
 
 function MessageSeller(props) {
@@ -65,14 +65,36 @@ function MessageSeller(props) {
   };
 
   return (
-    <Text
+    <TouchableOpacity
+      style={styles.bookcard_button}
       onPress={() =>
         queryCheck(props.user, props.bookOwnerId, props.bookOwnerName)
       }
     >
-      Contact Seller
-    </Text>
+      <Text style={styles.button_text}>Contact Seller</Text>
+    </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  bookcard_button: {
+    backgroundColor: "#389f70",
+    width: 150,
+    borderRadius: 50,
+    marginBottom: 5,
+    marginTop: 10,
+    padding: 5,
+
+    // flexDirection: "row",
+    // justifyContent: "center",
+    // alignItems: "center",
+  },
+
+  button_text: {
+    fontSize: 17,
+    color: "#ffffff",
+    marginLeft: 10,
+  },
+});
 
 export default MessageSeller;
